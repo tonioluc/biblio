@@ -1,28 +1,30 @@
 package web.bibliotheque.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 
+// Adherent.java
 @Entity
+@Table(name = "adherent")
 public class Adherent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idAdherent;
-
+    private Long idAdherent;
+    
     private String nom;
     private String prenom;
+    private LocalDate dateNaissance;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_profil")
+    private Profil profil;
 
-    @Column(unique = true, nullable = false)
-    private String email;
-
-    private String adresse;
-
-    private String statutCompte = "actif";
-
-    public Integer getIdAdherent() {
+    public Long getIdAdherent() {
         return idAdherent;
     }
 
-    public void setIdAdherent(Integer idAdherent) {
+    public void setIdAdherent(Long idAdherent) {
         this.idAdherent = idAdherent;
     }
 
@@ -42,28 +44,21 @@ public class Adherent {
         this.prenom = prenom;
     }
 
-    public String getEmail() {
-        return email;
+    public LocalDate getDateNaissance() {
+        return dateNaissance;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setDateNaissance(LocalDate dateNaissance) {
+        this.dateNaissance = dateNaissance;
     }
 
-    public String getAdresse() {
-        return adresse;
+    public Profil getProfil() {
+        return profil;
     }
 
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
+    public void setProfil(Profil profil) {
+        this.profil = profil;
     }
-
-    public String getStatutCompte() {
-        return statutCompte;
-    }
-
-    public void setStatutCompte(String statutCompte) {
-        this.statutCompte = statutCompte;
-    }
-
+    
+    // Getters, Setters, Constructeurs
 }

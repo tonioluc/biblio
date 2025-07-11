@@ -1,0 +1,67 @@
+Fonctionnalité : Effectuer une demande de prêt d’un exemplaire
+🎯 Titre
+Demander un prêt d’un livre
+
+🎯 Objectif
+Permettre à un adhérent d’effectuer une demande de prêt d’un exemplaire disponible, selon ses droits d’abonnement et son quota.
+
+👤 Acteur principal
+Adhérent
+
+🔁 Scénario nominal
+L’adhérent se connecte à son compte.
+
+Il accède à la liste des exemplaires disponibles.
+
+Il clique sur le bouton "Emprunter" pour un exemplaire.
+
+Le système vérifie :
+
+Si l’adhérent est inscrit et que l’abonnement n’est pas expiré.
+
+S’il n’est pas sous le coup d’une pénalité (date du jour > date_fin de la dernière pénalité non réglée).
+
+S’il lui reste du quota de prêt selon son profil (profil.quota_pret - prêts en cours).
+
+Si l’exemplaire est marqué comme Disponible.
+
+Si toutes les conditions sont remplies :
+
+Un enregistrement est créé dans la table pret avec :
+
+idAdherent
+
+idExemplaire
+
+date_pret = aujourd’hui
+
+date_retour_prevue = aujourd’hui + X jours (par défaut selon le profil)
+
+valide = false (en attente de validation par le bibliothécaire)
+
+Un message de confirmation est affiché : "Votre demande de prêt a été enregistrée. Elle est en attente de validation par un bibliothécaire."
+
+⚠️ Règles de gestion
+Un adhérent doit être inscrit (Inscription.date_debut ≤ today ≤ date_expiration) pour emprunter.
+
+Il ne doit pas être pénalisé (Penalite.date_fin ≥ today ET reglee = false).
+
+Son quota de prêt ne doit pas être dépassé (voir Profil.quota_pret).
+
+L’exemplaire doit avoir le statut = Disponible.
+
+Un prêt est d’abord créé en état non validé, puis validé plus tard par le bibliothécaire.
+
+Un adhérent peut avoir plusieurs prêts simultanés, dans la limite de son quota.
+
+🔄 Scénarios alternatifs
+Cas	Condition bloquante	Résultat
+A1	L’utilisateur n’est pas abonné	Message d’erreur : "Votre abonnement est expiré. Veuillez vous réinscrire."
+A2	Il est sous pénalité active	Message d’erreur : "Vous êtes actuellement pénalisé jusqu’au ..."
+A3	Il n’a plus de quota	Message d’erreur : "Quota de prêt atteint."
+A4	L’exemplaire n’est pas disponible	Message d’erreur : "Ce livre n’est pas disponible pour le moment."
+
+✅ Résultat attendu
+La demande est enregistrée dans la table pret.
+
+Le bibliothécaire pourra valider ou refuser la demande.

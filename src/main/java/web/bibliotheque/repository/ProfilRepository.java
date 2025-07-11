@@ -2,8 +2,9 @@ package web.bibliotheque.repository;
 
 import org.springframework.data.jpa.repository.*;
 
-import web.bibliotheque.model.Adherent;
+import web.bibliotheque.model.Profil;
 
 // AdherentRepository.java
-public interface AdherentRepository extends JpaRepository<Adherent, Long> {
+public interface ProfilRepository extends JpaRepository<Profil, Long> {
 }
+

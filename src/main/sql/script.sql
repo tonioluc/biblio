@@ -1,43 +1,67 @@
+-- \i D:/ANTONIO/S4/web-dynamique/biblio/src/main/sql/script.sql
 \c postgres;
 drop database if exists bibliotheque;
 create database bibliotheque;
 \c bibliotheque;
 
--- ================================
--- 🔐 Utilisateurs du site web
--- ================================
+-- Table Profil
+CREATE TABLE profil (
+   id_profil SERIAL PRIMARY KEY,
+   libelle VARCHAR(20) NOT NULL,
+   quota_pret INT NOT NULL,
+   quota_reservation INT NOT NULL,
+   quota_prolongement INT NOT NULL
+);
 
--- Table des adhérents (profil utilisateur)
--- CREATE TABLE Adherent (
---     id_adherent SERIAL PRIMARY KEY,
---     nom VARCHAR(100) NOT NULL,
---     prenom VARCHAR(100) NOT NULL,
---     email VARCHAR(255) UNIQUE NOT NULL,
---     adresse TEXT,
---     statut_compte VARCHAR(50) DEFAULT 'actif' -- actif / bloqué
--- );
+-- Table Adherent
+CREATE TABLE adherent (
+   id_adherent SERIAL PRIMARY KEY,
+   nom VARCHAR(50) NOT NULL,
+   prenom VARCHAR(50) NOT NULL,
+   date_naissance DATE NOT NULL,
+   id_profil INT NOT NULL REFERENCES profil(id_profil)
+);
 
--- -- Table des bibliothécaires (profil admin)
--- CREATE TABLE Bibliothecaire (
---     id_bibliothecaire SERIAL PRIMARY KEY,
---     nom VARCHAR(100) NOT NULL,
---     prenom VARCHAR(100) NOT NULL,
---     email VARCHAR(255) UNIQUE NOT NULL
--- );
+-- Table Bibliothecaire
+CREATE TABLE bibliothecaire (
+   id_bibliothecaire SERIAL PRIMARY KEY,
+   nom VARCHAR(50) NOT NULL,
+   prenom VARCHAR(50) NOT NULL,
+   date_embauche DATE NOT NULL
+);
 
--- -- Table des utilisateurs (authentification)
--- CREATE TABLE Utilisateur (
---     id_utilisateur SERIAL PRIMARY KEY,
---     email VARCHAR(255) UNIQUE NOT NULL,
---     mot_de_passe VARCHAR(255) NOT NULL,
---     role VARCHAR(20) NOT NULL CHECK (role IN ('adherent', 'bibliothecaire')),
-    
---     -- Liaison avec les profils selon le rôle
---     id_adherent INT UNIQUE,
---     id_bibliothecaire INT UNIQUE,
+-- Table Abonnement
+CREATE TABLE abonnement (
+   id_abonnement SERIAL PRIMARY KEY,
+   date_debut DATE NOT NULL,
+   date_expiration DATE NOT NULL,
+   id_adherent INT NOT NULL REFERENCES adherent(id_adherent)
+);
 
---     FOREIGN KEY (id_adherent) REFERENCES Adherent(id_adherent) ON DELETE CASCADE,
---     FOREIGN KEY (id_bibliothecaire) REFERENCES Bibliothecaire(id_bibliothecaire) ON DELETE CASCADE
--- );
+-- Table Exemplaire
+CREATE TABLE exemplaire (
+   id_exemplaire SERIAL PRIMARY KEY,
+   ref_ VARCHAR(50) NOT NULL,
+   titre VARCHAR(50) NOT NULL
+);
 
--- \i 'D:/ANTONIO/S4/web-dynamique/bibliotheque/src/main/sql/script.sql'
+-- Table Utilisateur
+CREATE TABLE utilisateur (
+   id_utilisateur SERIAL PRIMARY KEY,
+   nom_utilisateur VARCHAR(50) NOT NULL UNIQUE,
+   mot_de_passe VARCHAR(100) NOT NULL,
+   role VARCHAR(20) NOT NULL CHECK (role IN ('ADHERENT', 'BIBLIOTHECAIRE')),
+   id_bibliothecaire INT REFERENCES bibliothecaire(id_bibliothecaire),
+   id_adherent INT REFERENCES adherent(id_adherent)
+);
+
+-- Table Pret
+CREATE TABLE pret (
+   id_pret SERIAL PRIMARY KEY,
+   date_de_pret DATE,
+   date_retour_prevue DATE,
+   date_retour_effective DATE,
+   id_exemplaire INT NOT NULL REFERENCES exemplaire(id_exemplaire),
+   id_adherent INT NOT NULL REFERENCES adherent(id_adherent),
+   UNIQUE(id_exemplaire, date_de_pret) -- empêche deux prêts simultanés sur un même exemplaire
+);

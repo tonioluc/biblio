@@ -2,43 +2,37 @@ package web.bibliotheque.model;
 
 import jakarta.persistence.*;
 
+// Utilisateur.java
 @Entity
+@Table(name = "utilisateur")
 public class Utilisateur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idUtilisateur;
-
-    @Column(unique = true, nullable = false)
-    private String email;
-
-    @Column(nullable = false)
+    private Long idUtilisateur;
+    
+    @Column(unique = true)
+    private String nomUtilisateur;
     private String motDePasse;
-
-    @Column(nullable = false)
-    private String role; // 'adherent' ou 'bibliothecaire'
-
+    private String role; // "ADHERENT" ou "BIBLIOTHECAIRE"
+    
     @OneToOne
-    @JoinColumn(name = "idAdherent", referencedColumnName = "idAdherent")
+    @JoinColumn(name = "id_adherent")
     private Adherent adherent;
 
-    @OneToOne
-    @JoinColumn(name = "idBibliothecaire", referencedColumnName = "idBibliothecaire")
-    private Bibliothecaire bibliothecaire;
-
-    public Integer getId() {
+    public Long getIdUtilisateur() {
         return idUtilisateur;
     }
 
-    public void setId(Integer idUtilisateur) {
+    public void setIdUtilisateur(Long idUtilisateur) {
         this.idUtilisateur = idUtilisateur;
     }
 
-    public String getEmail() {
-        return email;
+    public String getNomUtilisateur() {
+        return nomUtilisateur;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setNomUtilisateur(String nomUtilisateur) {
+        this.nomUtilisateur = nomUtilisateur;
     }
 
     public String getMotDePasse() {
@@ -64,13 +58,6 @@ public class Utilisateur {
     public void setAdherent(Adherent adherent) {
         this.adherent = adherent;
     }
-
-    public Bibliothecaire getBibliothecaire() {
-        return bibliothecaire;
-    }
-
-    public void setBibliothecaire(Bibliothecaire bibliothecaire) {
-        this.bibliothecaire = bibliothecaire;
-    }
-
+    
+    // Getters, Setters, Constructeurs
 }
