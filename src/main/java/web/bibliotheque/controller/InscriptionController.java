@@ -55,7 +55,7 @@ public class InscriptionController {
             Abonnement abonnement = new Abonnement();
             abonnement.setDateDebut(dto.getDateDebutAbonnement());
             abonnement.setDateExpiration(dto.getDateExpirationAbonnement());
-            abonnement.setAdherent(adherent);
+            abonnement.setAdherent(adherent); 
             abonnementService.save(abonnement);
 
             return "redirect:/inscription?success";
