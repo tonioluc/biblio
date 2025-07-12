@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="container">
+    <form action="/preter-livre" th:object="${pretDTO}" method="post">
+      <div>
+        <label for="ref">Référence de l'exemplaire :</label>
+        <input list="refs" id="ref" th:field="*{ref}" name="ref">
+        <datalist id="refs">
+          <option th:each="exemplaire : ${exemplaires}" th:value="${exemplaire.getRef()}">
+        </datalist>
+      </div>
+      <div>
+        <label for="adherent">Nom d'utilisateur d'adhérent</label>
+        <input list="adherents" th:field="*{adherent}" name="adherent" id="adherent">
+        <datalist id="adherents">
+          <option th:each="adherent : ${adherents}" th:value="${adherent.getUsername()}">
+        </datalist>
+      </div>
+      <div>
+        <label for="date">Date de prêt : </label>
+        <input type="date" name="date" th:field="*{dateDePret}" id="date">
+      </div>
+      <div>
+        <input type="submit" value="Valider">
+      </div>
+    </form>
+  </div>
+</body>
+
+</html>

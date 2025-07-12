@@ -41,8 +41,9 @@ CREATE TABLE abonnement (
 -- Table Exemplaire
 CREATE TABLE exemplaire (
    id_exemplaire SERIAL PRIMARY KEY,
-   ref_ VARCHAR(50) NOT NULL,
-   titre VARCHAR(50) NOT NULL
+   ref VARCHAR(50) NOT NULL,
+   titre VARCHAR(50) NOT NULL,
+   restriction_age int
 );
 
 -- Table Utilisateur
