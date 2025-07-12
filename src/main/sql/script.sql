@@ -67,3 +67,13 @@ CREATE TABLE pret (
    id_adherent INT NOT NULL REFERENCES adherent(id_adherent),
    UNIQUE(id_exemplaire, date_de_pret) -- empêche deux prêts simultanés sur un même exemplaire
 );
+
+-- Verifier si un exemplaire est dispo
+/*
+
+select count(*)
+from pret
+where date_de_pret <= ? and ? <= date_retour_prevue
+and id_exemplaire = ?;
+
+*/

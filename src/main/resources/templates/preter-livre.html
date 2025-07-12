@@ -21,7 +21,7 @@
         <label for="adherent">Nom d'utilisateur d'adhérent</label>
         <input list="adherents" th:field="*{adherent}" name="adherent" id="adherent">
         <datalist id="adherents">
-          <option th:each="adherent : ${adherents}" th:value="${adherent.getUsername()}">
+          <option th:each="utilisateur : ${utilisateurs}" th:value="${utilisateur.getNomUtilisateur()}">
         </datalist>
       </div>
       <div>

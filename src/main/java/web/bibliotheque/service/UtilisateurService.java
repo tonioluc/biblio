@@ -1,5 +1,7 @@
 package web.bibliotheque.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,5 +14,8 @@ public class UtilisateurService {
     UtilisateurRepository utilisateurRepository;
     public void save(Utilisateur utilisateur){
         utilisateurRepository.save(utilisateur);
+    }
+    public List<Utilisateur> getByRole(String role){
+        return utilisateurRepository.findByRole(role);
     }
 }
