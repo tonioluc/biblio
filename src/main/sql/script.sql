@@ -10,7 +10,8 @@ CREATE TABLE profil (
    libelle VARCHAR(20) NOT NULL,
    quota_pret INT NOT NULL,
    quota_reservation INT NOT NULL,
-   quota_prolongement INT NOT NULL
+   quota_prolongement INT NOT NULL,
+   durree_de_pret int not null
 );
 
 -- Table Adherent

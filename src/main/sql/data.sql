@@ -1,7 +1,7 @@
-INSERT INTO profil (libelle, quota_pret, quota_reservation, quota_prolongement) VALUES
-('ETUDIANT', 5, 3, 2),
-('PROFESSEUR', 10, 5, 4),
-('ADMINISTRATEUR', 15, 10, 5);
+INSERT INTO profil (libelle, quota_pret, quota_reservation, quota_prolongement, durree_de_pret) VALUES
+('ETUDIANT', 5, 3, 2,10),
+('PROFESSEUR', 10, 5, 4,15);
+
 -- Insertion de quelques exemplaires
 INSERT INTO exemplaire (ref, titre,restriction_age) VALUES 
 ('REF-001', 'Le Petit Prince',5),

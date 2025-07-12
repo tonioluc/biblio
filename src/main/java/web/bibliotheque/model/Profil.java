@@ -2,7 +2,6 @@ package web.bibliotheque.model;
 
 import jakarta.persistence.*;
 
-// Profil.java
 @Entity
 @Table(name = "profil")
 public class Profil {

@@ -2,7 +2,6 @@ package web.bibliotheque.model;
 
 import jakarta.persistence.*;
 
-// Utilisateur.java
 @Entity
 @Table(name = "utilisateur")
 public class Utilisateur {
