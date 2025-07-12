@@ -1,6 +1,7 @@
 package web.bibliotheque.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,5 +18,8 @@ public class UtilisateurService {
     }
     public List<Utilisateur> getByRole(String role){
         return utilisateurRepository.findByRole(role);
+    }
+    public Optional<Utilisateur> getByUserName(String username){
+        return utilisateurRepository.findByNomUtilisateur(username);
     }
 }

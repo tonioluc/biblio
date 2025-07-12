@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import web.bibliotheque.dto.PretExemplaireDTO;
+import web.bibliotheque.model.Adherent;
 import web.bibliotheque.model.Exemplaire;
 import web.bibliotheque.model.Utilisateur;
+import web.bibliotheque.service.AdherentService;
 import web.bibliotheque.service.ExemplaireService;
 import web.bibliotheque.service.UtilisateurService;
 
@@ -23,6 +25,9 @@ public class ExemplaireController {
 
     @Autowired
     private ExemplaireService exemplaireService;
+
+    @Autowired
+    private AdherentService adherentService;
 
     @GetMapping("/preter-livre")
     public String afficherFormulaire(Model model){
@@ -44,6 +49,16 @@ public class ExemplaireController {
             Exemplaire exemplaire = exemplaireOpt.get();
             if (exemplaireService.estDisponible(pretExemplaireDTO.getDateDePret(), exemplaire.getIdExemplaire())) {
                 System.out.println("exemplaire dispo");
+
+                Optional<Utilisateur> utilisateurOpt = utilisateurService.getByUserName(pretExemplaireDTO.getAdherent());
+                if (utilisateurOpt.isPresent()) {
+                    System.out.println("adhérent existe");
+                    Utilisateur utilisateur = utilisateurOpt.get();
+                    Adherent adherent = utilisateur.getAdherent();
+                    
+                }else{
+                    System.out.println("Adhérent n'existe pas");
+                }
             }else{
                 System.out.println("Exemplaire non dispo");
             }
