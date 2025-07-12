@@ -14,6 +14,7 @@ import web.bibliotheque.dto.PretExemplaireDTO;
 import web.bibliotheque.model.Adherent;
 import web.bibliotheque.model.Exemplaire;
 import web.bibliotheque.model.Utilisateur;
+import web.bibliotheque.service.AbonnementService;
 import web.bibliotheque.service.AdherentService;
 import web.bibliotheque.service.ExemplaireService;
 import web.bibliotheque.service.UtilisateurService;
@@ -29,11 +30,14 @@ public class ExemplaireController {
     @Autowired
     private AdherentService adherentService;
 
+    @Autowired
+    private AbonnementService abonnementService;
+
     @GetMapping("/preter-livre")
-    public String afficherFormulaire(Model model){
+    public String afficherFormulaire(Model model) {
         List<Utilisateur> utilisateurs = utilisateurService.getByRole("ADHERENT");
         model.addAttribute("utilisateurs", utilisateurs);
-        
+
         List<Exemplaire> exemplaires = exemplaireService.getAll();
         model.addAttribute("exemplaires", exemplaires);
 
@@ -43,27 +47,32 @@ public class ExemplaireController {
     }
 
     @PostMapping("/preter-livre")
-    public String preterExemplaire(@ModelAttribute PretExemplaireDTO pretExemplaireDTO ,Model model){
+    public String preterExemplaire(@ModelAttribute PretExemplaireDTO pretExemplaireDTO, Model model) throws Exception {
         Optional<Exemplaire> exemplaireOpt = exemplaireService.getByRef(pretExemplaireDTO.getRef());
         if (exemplaireOpt.isPresent()) {
             Exemplaire exemplaire = exemplaireOpt.get();
             if (exemplaireService.estDisponible(pretExemplaireDTO.getDateDePret(), exemplaire.getIdExemplaire())) {
                 System.out.println("exemplaire dispo");
 
-                Optional<Utilisateur> utilisateurOpt = utilisateurService.getByUserName(pretExemplaireDTO.getAdherent());
+                Optional<Utilisateur> utilisateurOpt = utilisateurService
+                        .getByUserName(pretExemplaireDTO.getAdherent());
                 if (utilisateurOpt.isPresent()) {
                     System.out.println("adhérent existe");
                     Utilisateur utilisateur = utilisateurOpt.get();
                     Adherent adherent = utilisateur.getAdherent();
-                    
-                }else{
-                    System.out.println("Adhérent n'existe pas");
+                    if (abonnementService.estAbonnee(adherent, pretExemplaireDTO.getDateDePret())) {
+                        System.out.println("Adhérent abonné à cet date");
+                    } else {
+                        throw new Exception("Adhérent non abonné");
+                    }
+                } else {
+                    throw new Exception("Adhérent n'existe pas");
                 }
-            }else{
-                System.out.println("Exemplaire non dispo");
+            } else {
+                throw new Exception("Exemplaire non dispo");
             }
-        }else{
-            System.out.println("Exemplaire n'existe pas");
+        } else {
+            throw new Exception("Exemplaire n'existe pas");
         }
         return "redirect:/preter-livre";
     }
