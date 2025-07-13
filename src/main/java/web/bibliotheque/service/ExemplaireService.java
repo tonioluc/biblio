@@ -37,7 +37,7 @@ public class ExemplaireService {
         return (exemplaireRepository.nombreDePret(date_de_pret, id_exemplaire) == 0);
     }
 
-    public Optional<Exemplaire> getByRef(String ref){
+    public Optional<Exemplaire> getByRef(String ref) {
         return exemplaireRepository.findByRef(ref);
     }
 
@@ -57,8 +57,15 @@ public class ExemplaireService {
                         int nombreDePretEnCours = adherentService.nombreDePretEnCours(adherent);
                         if (quotaDePret > nombreDePretEnCours) {
                             if (!adherentService.estPenalise(adherent)) {
-                                
-                            }else{
+                                int ageAdherent = LocalDate.now().getYear() - adherent.getDateNaissance().getYear();
+                                int ageRequis = exemplaire.getRestriction_age();
+                                if (ageAdherent >= ageRequis) {
+                                    
+                                } else {
+                                    throw new Exception("L'adhérent ne peut pas prêter ce livre , age requis : "
+                                            + ageRequis + " age d'adhérent : " + ageAdherent);
+                                }
+                            } else {
                                 throw new Exception("Adhérent pénalisé.");
                             }
                         } else {
