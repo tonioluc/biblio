@@ -13,5 +13,8 @@ public interface ExemplaireRepository extends JpaRepository<Exemplaire, Long> {
     public int nombreDePret(@Param("date_de_pret") LocalDate date, @Param("id_exemplaire") Long idExemplaire);
 
     public Optional<Exemplaire> findByRef(String ref);
+
+    @Query(value = "SELECT count(*) from reservation where date_de_reservation <= :date and :date <= date_de_pret and etat = \'ACCEPTE\' and id_exemplaire = :id",nativeQuery = true)
+    public int estReserver(@Param("id") Long idExemplaire,@Param("date") LocalDate dateDePret);
 }
 

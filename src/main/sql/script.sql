@@ -33,16 +33,7 @@ CREATE TABLE penalite(
    FOREIGN KEY(id_adherent) REFERENCES Adherent(id_adherent)
 );
 
--- Table reservation
-CREATE TABLE reservation(
-   id_reservation SERIAL,
-   date_de_reservation DATE NOT NULL,
-   date_de_pret DATE,
-   etat VARCHAR(50),
-   id_adherent INT NOT NULL,
-   PRIMARY KEY(id_reservation),
-   FOREIGN KEY(id_adherent) REFERENCES Adherent(id_adherent)
-);
+
 
 -- Table Bibliothecaire
 CREATE TABLE bibliothecaire (
@@ -66,6 +57,19 @@ CREATE TABLE exemplaire (
    ref VARCHAR(50) NOT NULL,
    titre VARCHAR(50) NOT NULL,
    restriction_age int
+);
+
+-- Table reservation
+CREATE TABLE reservation(
+   id_reservation SERIAL,
+   date_de_reservation DATE NOT NULL,
+   date_de_pret DATE,
+   etat VARCHAR(50),
+   id_adherent INT NOT NULL,
+   id_exemplaire int not null,
+   PRIMARY KEY(id_reservation),
+   FOREIGN KEY(id_adherent) REFERENCES Adherent(id_adherent),
+   FOREIGN KEY(id_exemplaire) REFERENCES Exemplaire(id_exemplaire)
 );
 
 -- Table Utilisateur

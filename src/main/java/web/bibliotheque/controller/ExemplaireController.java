@@ -1,7 +1,6 @@
 package web.bibliotheque.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,9 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import web.bibliotheque.dto.PretExemplaireDTO;
 import web.bibliotheque.model.Exemplaire;
+import web.bibliotheque.model.Pret;
 import web.bibliotheque.model.TypeDePret;
 import web.bibliotheque.model.Utilisateur;
 import web.bibliotheque.service.ExemplaireService;
+import web.bibliotheque.service.PretService;
 import web.bibliotheque.service.TypeDePretService;
 import web.bibliotheque.service.UtilisateurService;
 
@@ -28,6 +29,9 @@ public class ExemplaireController {
 
     @Autowired
     private TypeDePretService typeDePretService;
+
+    @Autowired
+    private PretService pretService;
 
     private void loadModelForm(Model model) {
         List<Utilisateur> utilisateurs = utilisateurService.getByRole("ADHERENT");
@@ -51,7 +55,17 @@ public class ExemplaireController {
 
     @PostMapping("/preter-livre")
     public String preterExemplaire(@ModelAttribute PretExemplaireDTO pretExemplaireDTO, Model model) {
+        try {
+            Pret pret = exemplaireService.autoriserAPreter(pretExemplaireDTO);
+            pretService.sauvegarder(pret);
+            loadModelForm(model);
+            model.addAttribute("message", "Pret ajouter avec success");
+            return "preter-livre";
+        } catch (Exception e) {
+            loadModelForm(model);
+            model.addAttribute("erreur", e.getMessage());
+            return "preter-livre";
+        }
 
-        return "redirect:/preter-livre";
     }
 }
