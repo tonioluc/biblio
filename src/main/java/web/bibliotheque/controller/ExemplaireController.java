@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import web.bibliotheque.dto.PretExemplaireDTO;
 import web.bibliotheque.model.Exemplaire;
+import web.bibliotheque.model.TypeDePret;
 import web.bibliotheque.model.Utilisateur;
 import web.bibliotheque.service.ExemplaireService;
+import web.bibliotheque.service.TypeDePretService;
 import web.bibliotheque.service.UtilisateurService;
 
 @Controller
@@ -24,12 +26,18 @@ public class ExemplaireController {
     @Autowired
     private ExemplaireService exemplaireService;
 
+    @Autowired
+    private TypeDePretService typeDePretService;
+
     private void loadModelForm(Model model) {
         List<Utilisateur> utilisateurs = utilisateurService.getByRole("ADHERENT");
         model.addAttribute("utilisateurs", utilisateurs);
 
         List<Exemplaire> exemplaires = exemplaireService.getAll();
         model.addAttribute("exemplaires", exemplaires);
+
+        List<TypeDePret> typePrets = typeDePretService.getAll();
+        model.addAttribute("typePrets", typePrets);
 
         model.addAttribute("pretDTO", new PretExemplaireDTO());
 

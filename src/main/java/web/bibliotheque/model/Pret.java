@@ -23,6 +23,18 @@ public class Pret {
     @JoinColumn(name = "id_adherent")
     private Adherent adherent;
 
+    @ManyToOne
+    @JoinColumn(name = "id_type_de_pret")
+    private TypeDePret typeDePret;
+
+    public TypeDePret getTypeDePret() {
+        return typeDePret;
+    }
+
+    public void setTypeDePret(TypeDePret typeDePret) {
+        this.typeDePret = typeDePret;
+    }
+
     public Long getIdPret() {
         return idPret;
     }

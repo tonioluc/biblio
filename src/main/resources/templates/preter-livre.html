@@ -25,6 +25,12 @@
         </datalist>
       </div>
       <div>
+        <label for="typePret">Choix de type de prêt : </label>
+        <select name="typePret" th:field="*{typePret}" id="typePret">
+          <option th:each="typePret : ${typePrets}" th:text="${typePret.getLibelle()}" th:value="${typePret.getIdTypeDePret()}" ></option>
+        </select>
+      </div>
+      <div>
         <label for="date">Date de prêt : </label>
         <input type="date" name="date" th:field="*{dateDePret}" id="date">
       </div>

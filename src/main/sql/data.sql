@@ -9,3 +9,7 @@ INSERT INTO exemplaire (ref, titre,restriction_age) VALUES
 ('REF-003', 'L etranger',12),
 ('REF-004', 'Les Miserables',18),
 ('REF-005', 'Harry Potter a l ecole des sorciers',14);
+
+insert into type_de_pret (id_type_de_pret,libelle) VALUES
+(1,'Sur place'),
+(2,'Emporte');

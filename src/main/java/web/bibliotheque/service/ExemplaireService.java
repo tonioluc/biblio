@@ -62,7 +62,7 @@ public class ExemplaireService {
                                 if (ageAdherent >= ageRequis) {
                                     
                                 } else {
-                                    throw new Exception("L'adhérent ne peut pas prêter ce livre , age requis : "
+                                    throw new Exception("L'adhérent ne peut pas prêter ce livre . Age requis : "
                                             + ageRequis + " age d'adhérent : " + ageAdherent);
                                 }
                             } else {
