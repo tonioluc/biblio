@@ -88,25 +88,25 @@ public class ExemplaireService {
                                     return pret;
                                 } else {
                                     throw new Exception("L'adhérent ne peut pas prêter ce livre . Age requis : "
-                                            + ageRequis + " age d'adhérent : " + ageAdherent);
+                                            + ageRequis + " age d'adhérent : " + ageAdherent); // verifier
                                 }
                             } else {
                                 throw new Exception("Adhérent pénalisé.");
                             }
                         } else {
-                            throw new Exception("Nombre de quota de pret insuffisant.");
+                            throw new Exception("Nombre de quota de pret insuffisant."); // vérifier
                         }
                     } else {
-                        throw new Exception("Adhérent non abonné");
+                        throw new Exception("Adhérent non abonné"); // verifier
                     }
                 } else {
-                    throw new Exception("Adhérent n'existe pas");
+                    throw new Exception("Adhérent n'existe pas"); // verifier
                 }
             } else {
-                throw new Exception("Exemplaire non dispo");
+                throw new Exception("Exemplaire non dispo"); // verifier
             }
         } else {
-            throw new Exception("Exemplaire n'existe pas");
+            throw new Exception("Exemplaire n'existe pas"); // verifier
         }
     }
 }

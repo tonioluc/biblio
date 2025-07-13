@@ -13,13 +13,24 @@ import web.bibliotheque.repository.UtilisateurRepository;
 public class UtilisateurService {
     @Autowired
     UtilisateurRepository utilisateurRepository;
-    public void save(Utilisateur utilisateur){
+
+    public void save(Utilisateur utilisateur) {
         utilisateurRepository.save(utilisateur);
     }
-    public List<Utilisateur> getByRole(String role){
+
+    public List<Utilisateur> getByRole(String role) {
         return utilisateurRepository.findByRole(role);
     }
-    public Optional<Utilisateur> getByUserName(String username){
+
+    public Optional<Utilisateur> getByUserName(String username) {
         return utilisateurRepository.findByNomUtilisateur(username);
+    }
+
+    public Utilisateur checkLogin(String username, String mdp) throws Exception{
+        Optional<Utilisateur> utilisateurOpt = utilisateurRepository.findByNomUtilisateurAndMotDePasse(username, mdp);
+        if (utilisateurOpt.isPresent()) {
+            return utilisateurOpt.get();
+        }
+        throw new Exception("Nom d'utilisateur ou mot de passe n'est pas correct");
     }
 }
