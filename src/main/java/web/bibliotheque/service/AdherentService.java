@@ -6,6 +6,7 @@ import web.bibliotheque.model.Adherent;
 import web.bibliotheque.repository.AdherentRepository;
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class AdherentService {
 
@@ -27,7 +28,13 @@ public class AdherentService {
     public void delete(Long id) {
         adherentRepository.deleteById(id);
     }
-    public int nombreDePretEnCours(Adherent adherent){
+
+    public int nombreDePretEnCours(Adherent adherent) {
         return adherentRepository.nombreDePretEnCours(adherent.getIdAdherent());
     }
+
+    public boolean estPenalise(Adherent adherent) {
+        return adherentRepository.estPenalise(adherent.getIdAdherent()) > 0;
+    }
+
 }

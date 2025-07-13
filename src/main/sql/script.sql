@@ -23,6 +23,17 @@ CREATE TABLE adherent (
    id_profil INT NOT NULL REFERENCES profil(id_profil)
 );
 
+CREATE TABLE penalite(
+   id_penalite SERIAL,
+   date_debut DATE NOT NULL,
+   date_fin DATE NOT NULL,
+   resolu BOOLEAN,
+   id_adherent INT NOT NULL,
+   PRIMARY KEY(id_penalite),
+   FOREIGN KEY(id_adherent) REFERENCES Adherent(id_adherent)
+);
+
+
 -- Table Bibliothecaire
 CREATE TABLE bibliothecaire (
    id_bibliothecaire SERIAL PRIMARY KEY,
