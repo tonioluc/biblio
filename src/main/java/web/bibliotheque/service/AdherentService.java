@@ -27,5 +27,7 @@ public class AdherentService {
     public void delete(Long id) {
         adherentRepository.deleteById(id);
     }
-
+    public int nombreDePretEnCours(Adherent adherent){
+        return adherentRepository.nombreDePretEnCours(adherent.getIdAdherent());
+    }
 }

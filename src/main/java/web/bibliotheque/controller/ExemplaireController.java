@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import web.bibliotheque.dto.PretExemplaireDTO;
 import web.bibliotheque.model.Adherent;
 import web.bibliotheque.model.Exemplaire;
+import web.bibliotheque.model.Pret;
+import web.bibliotheque.model.Profil;
 import web.bibliotheque.model.Utilisateur;
 import web.bibliotheque.service.AbonnementService;
 import web.bibliotheque.service.AdherentService;
@@ -28,13 +30,12 @@ public class ExemplaireController {
     private ExemplaireService exemplaireService;
 
     @Autowired
-    private AdherentService adherentService;
-
-    @Autowired
     private AbonnementService abonnementService;
 
-    @GetMapping("/preter-livre")
-    public String afficherFormulaire(Model model) {
+    @Autowired
+    private AdherentService adherentService;
+
+    private void loadModelForm(Model model) {
         List<Utilisateur> utilisateurs = utilisateurService.getByRole("ADHERENT");
         model.addAttribute("utilisateurs", utilisateurs);
 
@@ -43,25 +44,33 @@ public class ExemplaireController {
 
         model.addAttribute("pretDTO", new PretExemplaireDTO());
 
+    }
+
+    @GetMapping("/preter-livre")
+    public String afficherFormulaire(Model model) {
+        loadModelForm(model);
         return "preter-livre";
     }
 
-    @PostMapping("/preter-livre")
-    public String preterExemplaire(@ModelAttribute PretExemplaireDTO pretExemplaireDTO, Model model) throws Exception {
+    private Pret autoriserAPreter(PretExemplaireDTO pretExemplaireDTO) throws Exception {
         Optional<Exemplaire> exemplaireOpt = exemplaireService.getByRef(pretExemplaireDTO.getRef());
         if (exemplaireOpt.isPresent()) {
             Exemplaire exemplaire = exemplaireOpt.get();
             if (exemplaireService.estDisponible(pretExemplaireDTO.getDateDePret(), exemplaire.getIdExemplaire())) {
-                System.out.println("exemplaire dispo");
-
                 Optional<Utilisateur> utilisateurOpt = utilisateurService
                         .getByUserName(pretExemplaireDTO.getAdherent());
                 if (utilisateurOpt.isPresent()) {
-                    System.out.println("adhérent existe");
                     Utilisateur utilisateur = utilisateurOpt.get();
                     Adherent adherent = utilisateur.getAdherent();
                     if (abonnementService.estAbonnee(adherent, pretExemplaireDTO.getDateDePret())) {
-                        System.out.println("Adhérent abonné à cet date");
+                        Profil profil = adherent.getProfil();
+                        int quotaDePret = profil.getQuotaPret();
+                        int nombreDePretEnCours = adherentService.nombreDePretEnCours(adherent);
+                        if (quotaDePret > nombreDePretEnCours) {
+                            
+                        } else {
+                            throw new Exception("Nombre de quota de pret insuffisant.");
+                        }
                     } else {
                         throw new Exception("Adhérent non abonné");
                     }
@@ -74,6 +83,11 @@ public class ExemplaireController {
         } else {
             throw new Exception("Exemplaire n'existe pas");
         }
+    }
+
+    @PostMapping("/preter-livre")
+    public String preterExemplaire(@ModelAttribute PretExemplaireDTO pretExemplaireDTO, Model model) {
+
         return "redirect:/preter-livre";
     }
 }
