@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="container">
+    <form action="/preter-livre" th:object="${pretDTO}" method="post">
+      <div>
+        <label for="ref">Référence de l'exemplaire :</label>
+        <input list="refs" id="ref" th:field="*{ref}" name="ref">
+        <datalist id="refs">
+          <option th:each="exemplaire : ${exemplaires}" th:value="${exemplaire.getRef()}">
+        </datalist>
+      </div>
+      <div>
+        <label for="adherent">Nom d'utilisateur d'adhérent</label>
+        <input list="adherents" th:field="*{adherent}" name="adherent" id="adherent">
+        <datalist id="adherents">
+          <option th:each="utilisateur : ${utilisateurs}" th:value="${utilisateur.getNomUtilisateur()}">
+        </datalist>
+      </div>
+      <div>
+        <label for="typePret">Choix de type de prêt : </label>
+        <select name="typePret" th:field="*{typePret}" id="typePret">
+          <option th:each="typePret : ${typePrets}" th:text="${typePret.getLibelle()}"
+            th:value="${typePret.getIdTypeDePret()}"></option>
+        </select>
+      </div>
+      <div>
+        <label for="date">Date de prêt : </label>
+        <input type="date" name="date" th:field="*{dateDePret}" id="date">
+      </div>
+      <div>
+        <input type="submit" value="Valider">
+      </div>
+    </form>
+    <div>
+      <p th:if="${erreur}" class="error" th:text="${erreur}"></p>
+      <p th:if="${message}" class="error" th:text="${message}"></p>
+
+    </div>
+  </div>
+</body>
+
+</html>

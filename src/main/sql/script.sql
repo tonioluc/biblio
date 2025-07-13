@@ -10,7 +10,8 @@ CREATE TABLE profil (
    libelle VARCHAR(20) NOT NULL,
    quota_pret INT NOT NULL,
    quota_reservation INT NOT NULL,
-   quota_prolongement INT NOT NULL
+   quota_prolongement INT NOT NULL,
+   durree_de_pret int not null
 );
 
 -- Table Adherent
@@ -21,6 +22,18 @@ CREATE TABLE adherent (
    date_naissance DATE NOT NULL,
    id_profil INT NOT NULL REFERENCES profil(id_profil)
 );
+
+CREATE TABLE penalite(
+   id_penalite SERIAL,
+   date_debut DATE NOT NULL,
+   date_fin DATE NOT NULL,
+   resolu BOOLEAN,
+   id_adherent INT NOT NULL,
+   PRIMARY KEY(id_penalite),
+   FOREIGN KEY(id_adherent) REFERENCES Adherent(id_adherent)
+);
+
+
 
 -- Table Bibliothecaire
 CREATE TABLE bibliothecaire (
@@ -41,8 +54,22 @@ CREATE TABLE abonnement (
 -- Table Exemplaire
 CREATE TABLE exemplaire (
    id_exemplaire SERIAL PRIMARY KEY,
-   ref_ VARCHAR(50) NOT NULL,
-   titre VARCHAR(50) NOT NULL
+   ref VARCHAR(50) NOT NULL,
+   titre VARCHAR(50) NOT NULL,
+   restriction_age int
+);
+
+-- Table reservation
+CREATE TABLE reservation(
+   id_reservation SERIAL,
+   date_de_reservation DATE NOT NULL,
+   date_de_pret DATE,
+   etat VARCHAR(50),
+   id_adherent INT NOT NULL,
+   id_exemplaire int not null,
+   PRIMARY KEY(id_reservation),
+   FOREIGN KEY(id_adherent) REFERENCES Adherent(id_adherent),
+   FOREIGN KEY(id_exemplaire) REFERENCES Exemplaire(id_exemplaire)
 );
 
 -- Table Utilisateur
@@ -55,13 +82,35 @@ CREATE TABLE utilisateur (
    id_adherent INT REFERENCES adherent(id_adherent)
 );
 
+-- Table type_de_pret
+CREATE TABLE type_de_pret(
+   id_type_de_pret INT,
+   libelle VARCHAR(50),
+   PRIMARY KEY(id_type_de_pret)
+);
+
 -- Table Pret
-CREATE TABLE pret (
-   id_pret SERIAL PRIMARY KEY,
+CREATE TABLE pret(
+   id_pret SERIAL,
    date_de_pret DATE,
    date_retour_prevue DATE,
    date_retour_effective DATE,
-   id_exemplaire INT NOT NULL REFERENCES exemplaire(id_exemplaire),
-   id_adherent INT NOT NULL REFERENCES adherent(id_adherent),
-   UNIQUE(id_exemplaire, date_de_pret) -- empêche deux prêts simultanés sur un même exemplaire
+   id_type_de_pret INT NOT NULL,
+   id_exemplaire INT NOT NULL,
+   id_adherent INT NOT NULL,
+   PRIMARY KEY(id_pret),
+   UNIQUE(id_exemplaire),
+   FOREIGN KEY(id_type_de_pret) REFERENCES type_de_pret(id_type_de_pret),
+   FOREIGN KEY(id_exemplaire) REFERENCES exemplaire(id_exemplaire),
+   FOREIGN KEY(id_adherent) REFERENCES Adherent(id_adherent)
 );
+
+-- Verifier si un exemplaire est dispo
+/*
+
+select count(*)
+from pret
+where date_de_pret <= ? and ? <= date_retour_prevue
+and id_exemplaire = ?;
+
+*/
