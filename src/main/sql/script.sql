@@ -105,6 +105,14 @@ CREATE TABLE pret(
    FOREIGN KEY(id_adherent) REFERENCES Adherent(id_adherent)
 );
 
+CREATE TABLE prolongement(
+   id_prolongement SERIAL,
+   id_pret INT NOT NULL,
+   PRIMARY KEY(id_prolongement),
+   UNIQUE(id_pret),
+   FOREIGN KEY(id_pret) REFERENCES pret(id_pret)
+);
+
 -- Verifier si un exemplaire est dispo
 /*
 
