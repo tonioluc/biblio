@@ -5,13 +5,15 @@ create database bibliotheque;
 \c bibliotheque;
 
 -- Table Profil
-CREATE TABLE profil (
-   id_profil SERIAL PRIMARY KEY,
+CREATE TABLE Profil(
+   id_profil SERIAL,
    libelle VARCHAR(20) NOT NULL,
    quota_pret INT NOT NULL,
    quota_reservation INT NOT NULL,
    quota_prolongement INT NOT NULL,
-   durree_de_pret int not null
+   durree_de_pret INT,
+   durree_penalite INT,
+   PRIMARY KEY(id_profil)
 );
 
 -- Table Adherent

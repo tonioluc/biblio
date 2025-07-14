@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Formulaire pour rendre un livre :</h1>
+    <p>Date prévu pour le retour du livre : <span th:text="${pret.getDateRetourPrevue()}" ></span></p>
+    <form th:action="@{/rendre-livre/{id}(id=${idPret})}" method="post">
+        <div>
+            <label for="date">Date de retour effective du livre :</label>
+            <input type="date" name="dateDeRetour">
+        </div>
+        <div>
+            <input type="submit" value="Valider">
+        </div>
+    </form>
+</body>
+
+</html>

@@ -59,6 +59,7 @@ public class ProlongementService {
         Utilisateur utilisateur = utilisateurService.getById(idUtilisateur);
         Adherent adherent = utilisateur.getAdherent();
         Profil profil = adherent.getProfil();
+        LocalDate dateApresProlongement = pret.getDateRetourPrevue().plusDays(profil.getDurreeDePret());
         if (!abonnementService.estAbonnee(adherent, LocalDate.now())) {
             throw new Exception("Adhérent non abonnée"); // Vérifié
         }
@@ -67,12 +68,12 @@ public class ProlongementService {
         if (quotaProlongement <= quotaUtilise) {
             throw new Exception("Quota de prolongement atteint pour l'adhérent , utilisé : " + quotaUtilise); // Vérifié
         }
-        if(adherentService.estPenalise(adherent)){
+        if(adherentService.estPenalise(adherent , dateApresProlongement)){
             throw new Exception("Vous êtes pénalisé , vous ne pouver pas faire un prolongement");
         }
         Prolongement prolongement = new Prolongement();
         prolongement.setPret(pret);
-        prolongement.setDateRetourApresProlongement(pret.getDateRetourPrevue().plusDays(profil.getDurreeDePret()));
+        prolongement.setDateRetourApresProlongement(dateApresProlongement);
         prolongement.setAccepted(false);
         prolongement.setChecked(false);
         prolongementRepostirory.save(prolongement);

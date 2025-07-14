@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Liste des prêts des exemplaires en cours : </h1>
+    <table border="1" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Référence du livre : </th>
+                <th>Nom du livre : </th>
+                <th>Adherent : </th>
+                <th>Date prévu rendement : </th>
+                <th>Action : </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="pret : ${prets}">
+                <td th:text="${pret.getExemplaire().getRef()}"></td>
+                <td th:text="${pret.getExemplaire().getTitre()}"></td>
+                <td th:text="${pret.getAdherent().getIdAdherent()}"></td>
+                <td th:text="${#temporals.format(pret.getDateRetourPrevue(), 'dd/MM/yyyy')}"></td>
+                <td>
+                    <a th:href="@{/rendre-livre/{id}(id=${pret.idPret})}">
+                        <button>Rendre</button>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="success" th:if="${message}" th:text="${message}"></p>
+</body>
+
+</html>

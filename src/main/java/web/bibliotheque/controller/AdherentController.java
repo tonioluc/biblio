@@ -40,10 +40,10 @@ public class AdherentController {
         model.addAttribute("pretsDTO", prets);
     }
 
-    @GetMapping("/liste-pret-en-cours")
+    @GetMapping("/liste-pret-en-cours-adh")
     public String showListPretEnCours(HttpSession session, Model model) {
         chargerModelListePretEnCours(session, model);
-        return "liste-pret-en-cours";
+        return "liste-pret-en-cours-adh";
     }
 
     @GetMapping("/demande-prolongement/{id}")
@@ -56,19 +56,19 @@ public class AdherentController {
                     prolongementService.autoriserAProlonger(pret, (Long) session.getAttribute("idUser"));
                     chargerModelListePretEnCours(session, model);
                     model.addAttribute("message", "Prolongement fait avec success");
-                    return "liste-pret-en-cours";
+                    return "liste-pret-en-cours-adh";
                 } catch (Exception e) {
                     chargerModelListePretEnCours(session, model);
                     model.addAttribute("erreur", e.getMessage());
-                    return "liste-pret-en-cours";
+                    return "liste-pret-en-cours-adh";
                 }
             }
             chargerModelListePretEnCours(session, model);
             model.addAttribute("erreur", "Pret déjà prolongé");
-            return "liste-pret-en-cours";
+            return "liste-pret-en-cours-adh";
         }
         chargerModelListePretEnCours(session, model);
         model.addAttribute("erreur", "Pret non trouvé");
-        return "liste-pret-en-cours";
+        return "liste-pret-en-cours-adh";
     }
 }
