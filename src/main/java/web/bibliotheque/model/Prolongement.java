@@ -19,6 +19,16 @@ public class Prolongement {
     @JoinColumn(name = "id_pret")
     private Pret pret;
 
+    private boolean accepted;
+
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
+    }
+
     public Long getIdProlongement() {
         return idProlongement;
     }

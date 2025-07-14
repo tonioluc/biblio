@@ -33,4 +33,8 @@ public class UtilisateurService {
         }
         throw new Exception("Nom d'utilisateur ou mot de passe n'est pas correct");
     }
+
+    public Utilisateur getById(Long idUtilisateur){
+        return utilisateurRepository.findById(idUtilisateur).orElse(null);
+    }
 }

@@ -23,11 +23,14 @@
                 <td th:text="${pretDTO.getPret().getExemplaire().getTitre()}"></td>
                 <td>
                     <span th:if="${pretDTO.prolonger}">Déjà prolongé</span>
-                    <a th:if="${!pretDTO.prolonger}" th:href="@{/prolonger/{id}(id=${pretDTO.pret.idPret})}"><button>Prolonger</button></a>
+                    <a th:if="${!pretDTO.prolonger}"
+                        th:href="@{/prolonger/{id}(id=${pretDTO.pret.idPret})}"><button>Prolonger</button></a>
                 </td>
             </tr>
         </tbody>
     </table>
+    <p class="success" th:if="${message}" th:text="${message}"></p>
+    <p class="erreur" th:if="${erreur}" th:text="${erreur}"></p>
 </body>
 
 </html>

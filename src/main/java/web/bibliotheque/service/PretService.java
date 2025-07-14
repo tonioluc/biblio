@@ -37,4 +37,8 @@ public class PretService {
         return result;
     }
 
+    public Pret getPretById(Long id) {
+        return pretRepository.findById(id).orElse(null);
+    }
+
 }
