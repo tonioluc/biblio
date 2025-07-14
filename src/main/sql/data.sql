@@ -13,3 +13,11 @@ INSERT INTO exemplaire (ref, titre,restriction_age) VALUES
 insert into type_de_pret (id_type_de_pret,libelle) VALUES
 (1,'Sur place'),
 (2,'Emporte');
+
+-- Insertion d'un bibliothécaire
+INSERT INTO bibliothecaire (nom, prenom, date_embauche)
+VALUES ('Dupont', 'Jean', '2024-09-01');
+
+-- Création de l'utilisateur associé au bibliothécaire
+INSERT INTO utilisateur (nom_utilisateur, mot_de_passe, role, id_bibliothecaire)
+VALUES ('biblio', 'mdp123', 'BIBLIOTHECAIRE', 1);

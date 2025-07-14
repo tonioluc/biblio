@@ -99,10 +99,20 @@ CREATE TABLE pret(
    id_exemplaire INT NOT NULL,
    id_adherent INT NOT NULL,
    PRIMARY KEY(id_pret),
-   UNIQUE(id_exemplaire),
    FOREIGN KEY(id_type_de_pret) REFERENCES type_de_pret(id_type_de_pret),
    FOREIGN KEY(id_exemplaire) REFERENCES exemplaire(id_exemplaire),
    FOREIGN KEY(id_adherent) REFERENCES Adherent(id_adherent)
+);
+
+CREATE TABLE prolongement(
+   id_prolongement SERIAL,
+   accepted BOOLEAN,
+   date_retour_apres_prolongement DATE,
+   checked BOOLEAN,
+   id_pret INT NOT NULL,
+   PRIMARY KEY(id_prolongement),
+   UNIQUE(id_pret),
+   FOREIGN KEY(id_pret) REFERENCES pret(id_pret)
 );
 
 -- Verifier si un exemplaire est dispo

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Liste des demandes de prêts prolongés</h1>
+    <table border="1" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Référence du livre : </th>
+                <th>Nom du livre : </th>
+                <th>Date de retour prévue après prolongement : </th>
+                <th>Action : </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="prolongement : ${prolongements}">
+                <td th:text="${prolongement.pret.exemplaire.ref}"></td>
+                <td th:text="${prolongement.pret.exemplaire.titre}"></td>
+                <td th:text="${#temporals.format(prolongement.dateRetourApresProlongement, 'dd/MM/yyyy')}"></td>
+                <td>
+                    <a th:href="@{/accepter-prolongement/{id}(id=${prolongement.idProlongement})}">
+                        <button>Accepter</button>
+                    </a>
+                    <a th:href="@{/refuser-prolongement/{id}(id=${prolongement.idProlongement})}">
+                        <button>Refuser</button>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p th:if="${message}" th:text="${message}"></p>
+
+</body>
+
+</html>

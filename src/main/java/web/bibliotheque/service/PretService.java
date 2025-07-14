@@ -23,7 +23,9 @@ public class PretService {
     }
 
     public List<Pret> getByAdherent(Adherent adherent) {
-        return pretRepository.findByAdherent(adherent);
+        Long idAdherent = adherent.getIdAdherent();
+        System.out.println("idAdherent : "+idAdherent);
+        return pretRepository.findByIdAdherent(idAdherent);
     }
 
     public List<Pret> getPretsEnCours(Adherent adherent) {
@@ -35,6 +37,14 @@ public class PretService {
             }
         }
         return result;
+    }
+
+    public Pret getPretById(Long id) {
+        return pretRepository.findById(id).orElse(null);
+    }
+
+    public void updatePret(Pret pret){
+        pretRepository.save(pret);
     }
 
 }

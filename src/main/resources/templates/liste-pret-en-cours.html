@@ -18,13 +18,19 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="pret : ${prets}" >
-                <td th:text="${pret.getExemplaire().getRef()}"></td>
-                <td th:text="${pret.getExemplaire().getTitre()}"></td>
-                <td><button>Oatra</button></td>
+            <tr th:each="pretDTO : ${pretsDTO}">
+                <td th:text="${pretDTO.getPret().getExemplaire().getRef()}"></td>
+                <td th:text="${pretDTO.getPret().getExemplaire().getTitre()}"></td>
+                <td>
+                    <span th:if="${pretDTO.prolonger}">Déjà prolongé</span>
+                    <a th:if="${!pretDTO.prolonger}"
+                        th:href="@{/demande-prolongement/{id}(id=${pretDTO.pret.idPret})}"><button>Prolonger</button></a>
+                </td>
             </tr>
         </tbody>
     </table>
+    <p class="success" th:if="${message}" th:text="${message}"></p>
+    <p class="erreur" th:if="${erreur}" th:text="${erreur}"></p>
 </body>
 
 </html>
