@@ -3,20 +3,25 @@ package web.bibliotheque.model;
 import java.time.LocalDate;
 
 import jakarta.persistence.*;
-
 @Entity
 @Table(name = "pret")
 public class Pret {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_pret")
     private Long idPret;
     
+    @Column(name = "date_de_pret")
     private LocalDate dateDePret;
+
+    @Column(name = "date_retour_prevue")
     private LocalDate dateRetourPrevue;
+
+    @Column(name = "date_retour_effective")
     private LocalDate dateRetourEffective;
 
     @ManyToOne
-    @JoinColumn(name="id_exemplaire")
+    @JoinColumn(name = "id_exemplaire")
     private Exemplaire exemplaire;
 
     @ManyToOne
@@ -26,14 +31,6 @@ public class Pret {
     @ManyToOne
     @JoinColumn(name = "id_type_de_pret")
     private TypeDePret typeDePret;
-
-    public TypeDePret getTypeDePret() {
-        return typeDePret;
-    }
-
-    public void setTypeDePret(TypeDePret typeDePret) {
-        this.typeDePret = typeDePret;
-    }
 
     public Long getIdPret() {
         return idPret;
@@ -81,6 +78,14 @@ public class Pret {
 
     public void setAdherent(Adherent adherent) {
         this.adherent = adherent;
+    }
+
+    public TypeDePret getTypeDePret() {
+        return typeDePret;
+    }
+
+    public void setTypeDePret(TypeDePret typeDePret) {
+        this.typeDePret = typeDePret;
     }
 
 }
