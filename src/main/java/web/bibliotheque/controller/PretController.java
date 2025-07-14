@@ -60,4 +60,10 @@ public class PretController {
         loadPretsEnCours(model);
         return "liste-pret-en-cours-biblio";
     }
+
+    @GetMapping("/rendre-livre/{id}")
+    public String afficherFormulaire(@PathVariable("id") Long idPret ,Model model){
+        model.addAttribute("idPret", idPret);
+        return "rendre-livre";
+    }
 }
