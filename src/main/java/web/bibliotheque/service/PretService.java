@@ -41,4 +41,8 @@ public class PretService {
         return pretRepository.findById(id).orElse(null);
     }
 
+    public void updatePret(Pret pret){
+        pretRepository.save(pret);
+    }
+
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import web.bibliotheque.model.Prolongement;
 import web.bibliotheque.service.ProlongementService;
@@ -25,5 +26,13 @@ public class PretController {
         loadPretProlonger(model);
         return "liste-prets-prolonges";
     }
-    
+
+    @GetMapping("/accepter-prolongement/{id}")
+    public String accepterProlongement(@PathVariable("id") Long id , Model model){
+        Prolongement prolongement = prolongementService.getById(id);
+        prolongementService.accepterProlongement(prolongement);
+        loadPretProlonger(model);
+        model.addAttribute("message", "Prolongement accepté.");
+        return "liste-prets-prolonges";
+    }
 }

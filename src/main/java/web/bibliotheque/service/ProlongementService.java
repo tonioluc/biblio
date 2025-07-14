@@ -29,6 +29,9 @@ public class ProlongementService {
     @Autowired
     private AdherentService adherentService;
 
+    @Autowired
+    private PretService pretService;
+
     public boolean pretProlonger(Pret pret) {
         return prolongementRepostirory.findByPret(pret).isPresent();
     }
@@ -71,5 +74,15 @@ public class ProlongementService {
 
     public List<Prolongement> getAll() {
         return prolongementRepostirory.findAll();
+    }
+
+    public Prolongement getById(Long idProlongement){
+        return prolongementRepostirory.findById(idProlongement).orElse(null);
+    }
+
+    public void accepterProlongement(Prolongement prolongement){
+        Pret pret = prolongement.getPret();
+        pret.setDateRetourPrevue(prolongement.getDateRetourApresProlongement());
+        pretService.updatePret(pret);
     }
 }

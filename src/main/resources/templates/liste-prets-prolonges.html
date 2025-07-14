@@ -8,14 +8,13 @@
 </head>
 
 <body>
-    <h1>Liste des prêts prolongés</h1>
+    <h1>Liste des demandes de prêts prolongés</h1>
     <table border="1" cellspacing="0">
         <thead>
             <tr>
                 <th>Référence du livre : </th>
                 <th>Nom du livre : </th>
                 <th>Date de retour prévue après prolongement : </th>
-                <th>Nom d'utilisateur : </th>
                 <th>Action : </th>
             </tr>
         </thead>
@@ -24,11 +23,10 @@
                 <td th:text="${prolongement.pret.exemplaire.ref}"></td>
                 <td th:text="${prolongement.pret.exemplaire.titre}"></td>
                 <td th:text="${#temporals.format(prolongement.dateRetourApresProlongement, 'dd/MM/yyyy')}"></td>
-                <td th:text="${prolongement.pret.adherent.nom}" ></td>
                 <td>
                     <a th:href="@{/accepter-prolongement/{id}(id=${prolongement.idProlongement})}">
                         <button>Accepter</button>
-                    </a> 
+                    </a>
                     <a th:href="@{/refuser-prolongement/{id}(id=${prolongement.idProlongement})}">
                         <button>Refuser</button>
                     </a>
@@ -36,6 +34,8 @@
             </tr>
         </tbody>
     </table>
+    <p th:if="${message}" th:text="${message}"></p>
+
 </body>
 
 </html>
