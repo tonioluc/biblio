@@ -20,7 +20,6 @@ import web.bibliotheque.service.*;
 
 @Controller
 public class InscriptionController {
-
     @Autowired
     private ProfilService profilService;
     @Autowired

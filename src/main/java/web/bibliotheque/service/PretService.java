@@ -47,4 +47,8 @@ public class PretService {
         pretRepository.save(pret);
     }
 
+    public List<Pret> tousLesPretsEnCours(){
+        return pretRepository.tousLesPretsEnCours();
+    }
+
 }

@@ -8,13 +8,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import web.bibliotheque.model.Pret;
 import web.bibliotheque.model.Prolongement;
+import web.bibliotheque.service.PretService;
 import web.bibliotheque.service.ProlongementService;
 
 @Controller
 public class PretController {
     @Autowired
     private ProlongementService prolongementService;
+
+    @Autowired
+    private PretService pretService;
 
     public void loadPretProlonger(Model model){
         List<Prolongement> prolongements = prolongementService.getAllProlongementAVerifier();
@@ -43,5 +48,16 @@ public class PretController {
         loadPretProlonger(model);
         model.addAttribute("message", "Prolongement refusé.");
         return "liste-prets-prolonges";
+    }
+
+    public void loadPretsEnCours(Model model){
+        List<Pret> prets = pretService.tousLesPretsEnCours();
+        model.addAttribute("prets", prets);
+    }
+
+    @GetMapping("/liste-prets-en-cours")
+    public String afficherListePrets(Model model){
+        loadPretsEnCours(model);
+        return "liste-pret-en-cours-biblio";
     }
 }
