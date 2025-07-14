@@ -26,6 +26,9 @@ public class ProlongementService {
     @Autowired
     private UtilisateurService utilisateurService;
 
+    @Autowired
+    private AdherentService adherentService;
+
     public boolean pretProlonger(Pret pret) {
         return prolongementRepostirory.findByPret(pret).isPresent();
     }
@@ -56,6 +59,9 @@ public class ProlongementService {
         int quotaUtilise = this.nombreQuotaUtilise(adherent.getIdAdherent());
         if (quotaProlongement <= quotaUtilise) {
             throw new Exception("Quota de prolongement atteint pour l'adhérent , utilisé : " + quotaUtilise); // Vérifié
+        }
+        if(adherentService.estPenalise(adherent)){
+            throw new Exception("Vous êtes pénalisé , vous ne pouver pas faire un prolongement");
         }
         Prolongement prolongement = new Prolongement();
         prolongement.setPret(pret);
