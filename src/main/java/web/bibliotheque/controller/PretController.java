@@ -35,4 +35,13 @@ public class PretController {
         model.addAttribute("message", "Prolongement accepté.");
         return "liste-prets-prolonges";
     }
+
+    @GetMapping("/refuser-prolongement/{id}")
+    public String refuserProlongement(@PathVariable("id") Long id , Model model){
+        Prolongement prolongement = prolongementService.getById(id);
+        prolongementService.refuserProlongement(prolongement);
+        loadPretProlonger(model);
+        model.addAttribute("message", "Prolongement refusé.");
+        return "liste-prets-prolonges";
+    }
 }

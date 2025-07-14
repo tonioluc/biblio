@@ -104,4 +104,9 @@ public class ProlongementService {
         prolongement.setChecked(true);
         this.sauvergarder(prolongement);
     }
+
+    public void refuserProlongement(Prolongement prolongement){
+        prolongement.setChecked(true);
+        this.sauvergarder(prolongement);
+    }
 }

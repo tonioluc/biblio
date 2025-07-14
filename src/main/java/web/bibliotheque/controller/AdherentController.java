@@ -13,7 +13,6 @@ import web.bibliotheque.dto.PretProlongerDto;
 import web.bibliotheque.model.Adherent;
 import web.bibliotheque.model.Pret;
 import web.bibliotheque.model.Utilisateur;
-import web.bibliotheque.service.AdherentService;
 import web.bibliotheque.service.PretService;
 import web.bibliotheque.service.ProlongementService;
 import web.bibliotheque.service.UtilisateurService;
@@ -22,9 +21,6 @@ import web.bibliotheque.service.UtilisateurService;
 public class AdherentController {
     @Autowired
     private PretService pretService;
-
-    @Autowired
-    private AdherentService adherentService;
 
     @Autowired
     private ProlongementService prolongementService;
