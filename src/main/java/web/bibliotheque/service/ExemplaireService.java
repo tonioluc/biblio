@@ -66,7 +66,7 @@ public class ExemplaireService {
                         int quotaDePret = profil.getQuotaPret();
                         int nombreDePretEnCours = adherentService.nombreDePretEnCours(adherent);
                         if (quotaDePret > nombreDePretEnCours) {
-                            if (!adherentService.estPenalise(adherent)) {
+                            if (!adherentService.estPenalise(adherent , datePret)) {
                                 int ageAdherent = LocalDate.now().getYear() - adherent.getDateNaissance().getYear();
                                 int ageRequis = exemplaire.getRestriction_age();
                                 if (ageAdherent >= ageRequis) {

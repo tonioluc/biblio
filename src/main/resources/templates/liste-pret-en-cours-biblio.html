@@ -15,6 +15,7 @@
                 <th>Référence du livre : </th>
                 <th>Nom du livre : </th>
                 <th>Adherent : </th>
+                <th>Date prévu rendement : </th>
                 <th>Action : </th>
             </tr>
         </thead>
@@ -23,6 +24,7 @@
                 <td th:text="${pret.getExemplaire().getRef()}"></td>
                 <td th:text="${pret.getExemplaire().getTitre()}"></td>
                 <td th:text="${pret.getAdherent().getIdAdherent()}"></td>
+                <td th:text="${#temporals.format(pret.getDateRetourPrevue(), 'dd/MM/yyyy')}"></td>
                 <td>
                     <a th:href="@{/rendre-livre/{id}(id=${pret.idPret})}">
                         <button>Rendre</button>
@@ -32,7 +34,6 @@
         </tbody>
     </table>
     <p class="success" th:if="${message}" th:text="${message}"></p>
-    <p class="erreur" th:if="${erreur}" th:text="${erreur}"></p>
 </body>
 
 </html>

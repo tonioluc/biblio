@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import web.bibliotheque.model.Adherent;
 import web.bibliotheque.repository.AdherentRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,8 +35,8 @@ public class AdherentService {
         return adherentRepository.nombreDePretEnCours(adherent.getIdAdherent());
     }
 
-    public boolean estPenalise(Adherent adherent) {
-        return adherentRepository.estPenalise(adherent.getIdAdherent()) > 0;
+    public boolean estPenalise(Adherent adherent , LocalDate date) {
+        return adherentRepository.estPenalise(adherent.getIdAdherent(),date) > 0;
     }
     
 

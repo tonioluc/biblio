@@ -14,6 +14,15 @@ public class Profil {
     private int quotaReservation;
     private int quotaProlongement;
     private int durreeDePret;
+    private int durreePenalite;
+
+    public int getDurreePenalite() {
+        return durreePenalite;
+    }
+
+    public void setDurreePenalite(int durreePenalite) {
+        this.durreePenalite = durreePenalite;
+    }
 
     public int getDurreeDePret() {
         return durreeDePret;
