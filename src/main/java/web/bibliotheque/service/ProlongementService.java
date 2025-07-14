@@ -51,7 +51,11 @@ public class ProlongementService {
         return prolongementRepostirory.nombreQuotaUtilise(idAdherent);
     }
 
-    public void sauvegarder(Pret pret, Long idUtilisateur) throws Exception {
+    public void sauvergarder(Prolongement prolongement){
+        prolongementRepostirory.save(prolongement);
+    }
+
+    public void autoriserAProlonger(Pret pret, Long idUtilisateur) throws Exception {
         Utilisateur utilisateur = utilisateurService.getById(idUtilisateur);
         Adherent adherent = utilisateur.getAdherent();
         Profil profil = adherent.getProfil();
@@ -69,11 +73,23 @@ public class ProlongementService {
         Prolongement prolongement = new Prolongement();
         prolongement.setPret(pret);
         prolongement.setDateRetourApresProlongement(pret.getDateRetourPrevue().plusDays(profil.getDurreeDePret()));
+        prolongement.setAccepted(false);
+        prolongement.setChecked(false);
         prolongementRepostirory.save(prolongement);
     }
 
     public List<Prolongement> getAll() {
         return prolongementRepostirory.findAll();
+    }
+
+    public List<Prolongement> getAllProlongementAVerifier(){
+        List<Prolongement> result = new ArrayList<>();
+        for (Prolongement prolongement : this.getAll()) {
+            if (!prolongement.isChecked()) {
+                result.add(prolongement);
+            }
+        }
+        return result;
     }
 
     public Prolongement getById(Long idProlongement){
@@ -84,5 +100,8 @@ public class ProlongementService {
         Pret pret = prolongement.getPret();
         pret.setDateRetourPrevue(prolongement.getDateRetourApresProlongement());
         pretService.updatePret(pret);
+        prolongement.setAccepted(true);
+        prolongement.setChecked(true);
+        this.sauvergarder(prolongement);
     }
 }

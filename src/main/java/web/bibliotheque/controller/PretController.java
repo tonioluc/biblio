@@ -17,7 +17,7 @@ public class PretController {
     private ProlongementService prolongementService;
 
     public void loadPretProlonger(Model model){
-        List<Prolongement> prolongements = prolongementService.getAll();
+        List<Prolongement> prolongements = prolongementService.getAllProlongementAVerifier();
         model.addAttribute("prolongements", prolongements);
     }
 

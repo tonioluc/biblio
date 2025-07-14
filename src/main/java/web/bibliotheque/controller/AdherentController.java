@@ -12,9 +12,11 @@ import jakarta.servlet.http.HttpSession;
 import web.bibliotheque.dto.PretProlongerDto;
 import web.bibliotheque.model.Adherent;
 import web.bibliotheque.model.Pret;
+import web.bibliotheque.model.Utilisateur;
 import web.bibliotheque.service.AdherentService;
 import web.bibliotheque.service.PretService;
 import web.bibliotheque.service.ProlongementService;
+import web.bibliotheque.service.UtilisateurService;
 
 @Controller
 public class AdherentController {
@@ -27,11 +29,18 @@ public class AdherentController {
     @Autowired
     private ProlongementService prolongementService;
 
+    @Autowired
+    private UtilisateurService utilisateurService;
+
     private void chargerModelListePretEnCours(HttpSession session, Model model) {
-        Long idAdherent = (Long) session.getAttribute("idUser");
-        Adherent adherent = adherentService.getAdherentById(idAdherent).orElse(null);
+        Long idUtilisateur = (Long) session.getAttribute("idUser");
+        Utilisateur utilisateur = utilisateurService.getById(idUtilisateur);
+        Adherent adherent = utilisateur.getAdherent();
+        System.out.println("eto1");
         List<Pret> pretsSansProlongement = pretService.getPretsEnCours(adherent);
+        System.out.println("eto2 "+pretsSansProlongement.size());
         List<PretProlongerDto> prets = prolongementService.convertPret(pretsSansProlongement);
+        System.out.println("eto3 "+prets.size());
         model.addAttribute("pretsDTO", prets);
     }
 
@@ -48,7 +57,7 @@ public class AdherentController {
             boolean isProlonged = prolongementService.pretProlonger(pret);
             if (!isProlonged) {
                 try {
-                    prolongementService.sauvegarder(pret, (Long) session.getAttribute("idUser"));
+                    prolongementService.autoriserAProlonger(pret, (Long) session.getAttribute("idUser"));
                     chargerModelListePretEnCours(session, model);
                     model.addAttribute("message", "Prolongement fait avec success");
                     return "liste-pret-en-cours";

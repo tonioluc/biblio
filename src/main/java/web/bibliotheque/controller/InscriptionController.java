@@ -34,7 +34,11 @@ public class InscriptionController {
     public String afficherPageInscription(Model model) {
         List<Profil> profils = profilService.getAll();
         model.addAttribute("profils", profils);
-        model.addAttribute("inscriptionDTO", new InscriptionAdherentDTO());
+        InscriptionAdherentDTO inscriptionAdherentDTO = new InscriptionAdherentDTO();
+        inscriptionAdherentDTO.setNom("RANDRIA");
+        inscriptionAdherentDTO.setPrenom("Antonio");
+        inscriptionAdherentDTO.setUsername("tonioluc");
+        model.addAttribute("inscriptionDTO",inscriptionAdherentDTO);
         return "inscription";
     }
 

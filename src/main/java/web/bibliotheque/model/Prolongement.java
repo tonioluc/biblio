@@ -23,7 +23,17 @@ public class Prolongement {
 
     private boolean accepted;
 
+    private boolean checked;
+
     private LocalDate dateRetourApresProlongement;
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
 
     public LocalDate getDateRetourApresProlongement() {
         return dateRetourApresProlongement;
