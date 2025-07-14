@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import web.bibliotheque.model.Adherent;
 import web.bibliotheque.repository.AdherentRepository;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -36,5 +37,6 @@ public class AdherentService {
     public boolean estPenalise(Adherent adherent) {
         return adherentRepository.estPenalise(adherent.getIdAdherent()) > 0;
     }
+    
 
 }
