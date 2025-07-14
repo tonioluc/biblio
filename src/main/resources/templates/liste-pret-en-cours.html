@@ -24,7 +24,7 @@
                 <td>
                     <span th:if="${pretDTO.prolonger}">Déjà prolongé</span>
                     <a th:if="${!pretDTO.prolonger}"
-                        th:href="@{/prolonger/{id}(id=${pretDTO.pret.idPret})}"><button>Prolonger</button></a>
+                        th:href="@{/demande-prolongement/{id}(id=${pretDTO.pret.idPret})}"><button>Prolonger</button></a>
                 </td>
             </tr>
         </tbody>

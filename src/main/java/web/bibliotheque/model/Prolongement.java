@@ -1,5 +1,7 @@
 package web.bibliotheque.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +22,16 @@ public class Prolongement {
     private Pret pret;
 
     private boolean accepted;
+
+    private LocalDate dateRetourApresProlongement;
+
+    public LocalDate getDateRetourApresProlongement() {
+        return dateRetourApresProlongement;
+    }
+
+    public void setDateRetourApresProlongement(LocalDate dateRetourApresProlongement) {
+        this.dateRetourApresProlongement = dateRetourApresProlongement;
+    }
 
     public boolean isAccepted() {
         return accepted;

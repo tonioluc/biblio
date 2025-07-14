@@ -59,6 +59,11 @@ public class ProlongementService {
         }
         Prolongement prolongement = new Prolongement();
         prolongement.setPret(pret);
+        prolongement.setDateRetourApresProlongement(pret.getDateRetourPrevue().plusDays(profil.getDurreeDePret()));
         prolongementRepostirory.save(prolongement);
+    }
+
+    public List<Prolongement> getAll() {
+        return prolongementRepostirory.findAll();
     }
 }

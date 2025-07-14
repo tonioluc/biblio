@@ -41,7 +41,7 @@ public class AdherentController {
         return "liste-pret-en-cours";
     }
 
-    @GetMapping("/prolonger/{id}")
+    @GetMapping("/demande-prolongement/{id}")
     public String prolongerPret(@PathVariable Long id, HttpSession session, Model model) {
         Pret pret = pretService.getPretById(id);
         if (pret != null) {

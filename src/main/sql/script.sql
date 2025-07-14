@@ -107,8 +107,9 @@ CREATE TABLE pret(
 
 CREATE TABLE prolongement(
    id_prolongement SERIAL,
+   accepted BOOLEAN,
+   date_retour_apres_prolongement DATE,
    id_pret INT NOT NULL,
-   accepted BOOLEAN NOT NULL DEFAULT FALSE,
    PRIMARY KEY(id_prolongement),
    UNIQUE(id_pret),
    FOREIGN KEY(id_pret) REFERENCES pret(id_pret)
