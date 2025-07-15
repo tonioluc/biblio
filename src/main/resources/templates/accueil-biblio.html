@@ -4,22 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/menu-biblio.css}" />
     <title>Document</title>
 </head>
 
 <body>
-    <h1>Lien vers des fonctionnalité</h1>
-    <a href="/inscription">Inscrire un adhérent</a>
-    <br>
-    <a href="/preter-livre">Préter un exemplaire</a>
-    <br>
-    <a href="/liste-pret-prolonger">Liste des prêts à prolonger</a>
-    <br>
-    <a href="/liste-prets-en-cours">Liste des prêts en cours</a>
-    <br>
-    <a href="/api/adherent">End point adherent</a>
-    <br>
-    <a href="/api/livre">End point livre</a>
+    <main class="menu-page">
+        <h1>Menu des Fonctionnalités</h1>
+        <nav class="menu-links">
+            <a href="/inscription">➤ Inscrire un adhérent</a>
+            <a href="/preter-livre">➤ Prêter un exemplaire</a>
+            <a href="/liste-pret-prolonger">➤ Liste des prêts à prolonger</a>
+            <a href="/liste-prets-en-cours">➤ Liste des prêts en cours</a>
+            <a href="/api/adherent">➤ End Point Adhérent</a>
+            <a href="/api/livre">➤ End Point Livre</a>
+        </nav>
+    </main>
 </body>
 
 </html>

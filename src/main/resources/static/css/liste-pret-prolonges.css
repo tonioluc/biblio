@@ -41,13 +41,14 @@ body {
     color: var(--sable);
 }
 
-.inscription-container {
+.prolongement-container {
     background-color: white;
     margin-top: 2rem;
     padding: 2rem;
     border-radius: 8px;
-    width: 400px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 900px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 h1 {
@@ -56,44 +57,56 @@ h1 {
     text-align: center;
 }
 
-.inscription-form .form-group {
+.prolongement-table {
+    width: 100%;
+    border-collapse: collapse;
     margin-bottom: 1rem;
-    display: flex;
-    flex-direction: column;
 }
 
-.inscription-form label {
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-}
-
-.inscription-form input,
-.inscription-form select {
-    padding: 0.5rem;
+.prolongement-table th,
+.prolongement-table td {
     border: 1px solid var(--ardoise);
-    border-radius: 4px;
+    padding: 0.5rem;
+    text-align: center;
 }
 
-.btn-submit {
+.prolongement-table th {
     background-color: var(--bordeaux);
     color: white;
-    border: none;
-    padding: 0.5rem;
+}
+
+.prolongement-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.btn-action {
+    text-decoration: none;
+    color: white;
+    padding: 0.4rem 0.8rem;
     border-radius: 4px;
-    width: 100%;
+    margin: 0 0.2rem;
     font-weight: bold;
-    cursor: pointer;
-    margin-top: 1rem;
     transition: background-color 0.3s ease;
 }
 
-.btn-submit:hover {
+.btn-action.accepter {
+    background-color: var(--bordeaux);
+}
+
+.btn-action.accepter:hover {
     background-color: #5e201b;
 }
 
-.error-message {
-    margin-top: 1rem;
-    color: red;
+.btn-action.refuser {
+    background-color: var(--ardoise);
+}
+
+.btn-action.refuser:hover {
+    background-color: #333333;
+}
+
+.message {
     text-align: center;
+    color: green;
     font-weight: bold;
 }

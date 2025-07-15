@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/menu-adherent.css}" />
     <title>Document</title>
 </head>
+
 <body>
-    <h1>Accueil adhérent</h1>
-    <ul>Liste
-        <a href="/liste-pret-en-cours-adh">
-            <li>Pret en cours</li>
-        </a>
-    </ul>
+    <main class="adherent-home">
+        <h1>Accueil Adhérent</h1>
+        <ul class="adherent-list">
+            <li><a href="/liste-pret-en-cours-adh">➤ Prêts en cours</a></li>
+        </ul>
+    </main>
 </body>
+
 </html>
