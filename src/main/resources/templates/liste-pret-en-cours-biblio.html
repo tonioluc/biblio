@@ -8,12 +8,14 @@
 </head>
 
 <body>
+    <a th:href="@{/accueil}">Accueil</a>
+    <a th:href="@{/}">Deconnexion</a>
     <h1>Liste des prêts des exemplaires en cours : </h1>
     <table border="1" cellspacing="0">
         <thead>
             <tr>
-                <th>Référence du livre : </th>
-                <th>Nom du livre : </th>
+                <th>Id du livre : </th>
+                <th>Titre du livre : </th>
                 <th>Adherent : </th>
                 <th>Date prévu rendement : </th>
                 <th>Action : </th>
@@ -21,8 +23,8 @@
         </thead>
         <tbody>
             <tr th:each="pret : ${prets}">
-                <td th:text="${pret.getExemplaire().getRef()}"></td>
-                <td th:text="${pret.getExemplaire().getTitre()}"></td>
+                <td th:text="${pret.getExemplaire().getLivre().getIdLivre()}"></td>
+                <td th:text="${pret.getExemplaire().getLivre().getTitre()}"></td>
                 <td th:text="${pret.getAdherent().getIdAdherent()}"></td>
                 <td th:text="${#temporals.format(pret.getDateRetourPrevue(), 'dd/MM/yyyy')}"></td>
                 <td>

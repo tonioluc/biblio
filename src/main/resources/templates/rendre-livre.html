@@ -8,8 +8,10 @@
 </head>
 
 <body>
+    <a th:href="@{/accueil}">Accueil</a>
+    <a th:href="@{/}">Deconnexion</a>
     <h1>Formulaire pour rendre un livre :</h1>
-    <p>Date prévu pour le retour du livre : <span th:text="${pret.getDateRetourPrevue()}" ></span></p>
+    <p>Date prévu pour le retour du livre : <span th:text="${pret.getDateRetourPrevue()}"></span></p>
     <form th:action="@{/rendre-livre/{id}(id=${idPret})}" method="post">
         <div>
             <label for="date">Date de retour effective du livre :</label>

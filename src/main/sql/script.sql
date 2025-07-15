@@ -4,25 +4,44 @@ drop database if exists bibliotheque;
 create database bibliotheque;
 \c bibliotheque;
 
--- Table Profil
 CREATE TABLE Profil(
    id_profil SERIAL,
-   libelle VARCHAR(20) NOT NULL,
+   durree_penalite INT NOT NULL,
    quota_pret INT NOT NULL,
    quota_reservation INT NOT NULL,
    quota_prolongement INT NOT NULL,
    durree_de_pret INT,
-   durree_penalite INT,
+   libelle VARCHAR(50),
    PRIMARY KEY(id_profil)
 );
 
--- Table Adherent
-CREATE TABLE adherent (
-   id_adherent SERIAL PRIMARY KEY,
+CREATE TABLE Adherent(
+   id_adherent SERIAL,
    nom VARCHAR(50) NOT NULL,
    prenom VARCHAR(50) NOT NULL,
    date_naissance DATE NOT NULL,
-   id_profil INT NOT NULL REFERENCES profil(id_profil)
+   id_profil INT NOT NULL,
+   PRIMARY KEY(id_adherent),
+   UNIQUE(id_profil),
+   FOREIGN KEY(id_profil) REFERENCES Profil(id_profil)
+);
+
+CREATE TABLE Bibliothecaire(
+   id_bibliothecaire SERIAL,
+   nom VARCHAR(50) NOT NULL,
+   prenom VARCHAR(50) NOT NULL,
+   date_embauche DATE NOT NULL,
+   PRIMARY KEY(id_bibliothecaire)
+);
+
+CREATE TABLE Abonnement(
+   id_abonnement SERIAL,
+   date_debut DATE NOT NULL,
+   date_expiration DATE NOT NULL,
+   id_adherent INT NOT NULL,
+   PRIMARY KEY(id_abonnement),
+   UNIQUE(date_expiration),
+   FOREIGN KEY(id_adherent) REFERENCES Adherent(id_adherent)
 );
 
 CREATE TABLE penalite(
@@ -35,63 +54,66 @@ CREATE TABLE penalite(
    FOREIGN KEY(id_adherent) REFERENCES Adherent(id_adherent)
 );
 
-
-
--- Table Bibliothecaire
-CREATE TABLE bibliothecaire (
-   id_bibliothecaire SERIAL PRIMARY KEY,
-   nom VARCHAR(50) NOT NULL,
-   prenom VARCHAR(50) NOT NULL,
-   date_embauche DATE NOT NULL
-);
-
--- Table Abonnement
-CREATE TABLE abonnement (
-   id_abonnement SERIAL PRIMARY KEY,
-   date_debut DATE NOT NULL,
-   date_expiration DATE NOT NULL,
-   id_adherent INT NOT NULL REFERENCES adherent(id_adherent)
-);
-
--- Table Exemplaire
-CREATE TABLE exemplaire (
-   id_exemplaire SERIAL PRIMARY KEY,
-   ref VARCHAR(50) NOT NULL,
-   titre VARCHAR(50) NOT NULL,
-   restriction_age int
-);
-
--- Table reservation
-CREATE TABLE reservation(
-   id_reservation SERIAL,
-   date_de_reservation DATE NOT NULL,
-   date_de_pret DATE,
-   etat VARCHAR(50),
-   id_adherent INT NOT NULL,
-   id_exemplaire int not null,
-   PRIMARY KEY(id_reservation),
-   FOREIGN KEY(id_adherent) REFERENCES Adherent(id_adherent),
-   FOREIGN KEY(id_exemplaire) REFERENCES Exemplaire(id_exemplaire)
-);
-
--- Table Utilisateur
-CREATE TABLE utilisateur (
-   id_utilisateur SERIAL PRIMARY KEY,
-   nom_utilisateur VARCHAR(50) NOT NULL UNIQUE,
-   mot_de_passe VARCHAR(100) NOT NULL,
-   role VARCHAR(20) NOT NULL CHECK (role IN ('ADHERENT', 'BIBLIOTHECAIRE')),
-   id_bibliothecaire INT REFERENCES bibliothecaire(id_bibliothecaire),
-   id_adherent INT REFERENCES adherent(id_adherent)
-);
-
--- Table type_de_pret
 CREATE TABLE type_de_pret(
-   id_type_de_pret INT,
+   id_type_de_pret SERIAL,
    libelle VARCHAR(50),
    PRIMARY KEY(id_type_de_pret)
 );
 
--- Table Pret
+CREATE TABLE livre(
+   id_livre SERIAL,
+   titre VARCHAR(50) NOT NULL,
+   PRIMARY KEY(id_livre)
+);
+
+CREATE TABLE restriction_age(
+   id_restriction SERIAL,
+   age INT,
+   id_livre INT NOT NULL,
+   PRIMARY KEY(id_restriction),
+   UNIQUE(id_livre),
+   FOREIGN KEY(id_livre) REFERENCES livre(id_livre)
+);
+
+CREATE TABLE statut_exemplaire(
+   id_statut SERIAL,
+   libelle VARCHAR(50),
+   PRIMARY KEY(id_statut)
+);
+
+CREATE TABLE Utilisateur(
+   id_utilisateur SERIAL,
+   nom_utilisateur VARCHAR(50) NOT NULL,
+   mot_de_passe VARCHAR(100) NOT NULL,
+   role VARCHAR(20) NOT NULL CHECK(role IN('ADHERENT', 'BIBLIOTHECAIRE')),
+   id_bibliothecaire INT,
+   id_adherent INT,
+   PRIMARY KEY(id_utilisateur),
+   UNIQUE(nom_utilisateur),
+   FOREIGN KEY(id_bibliothecaire) REFERENCES Bibliothecaire(id_bibliothecaire),
+   FOREIGN KEY(id_adherent) REFERENCES Adherent(id_adherent)
+);
+
+CREATE TABLE exemplaire(
+   id_exemplaire SERIAL,
+   id_livre INT NOT NULL,
+   PRIMARY KEY(id_exemplaire),
+   FOREIGN KEY(id_livre) REFERENCES livre(id_livre)
+);
+
+CREATE TABLE reservation(
+   id_reservation SERIAL,
+   date_de_reservation DATE NOT NULL,
+   date_de_pret DATE,
+   date_acceptation date,
+   etat VARCHAR(50),
+   id_exemplaire INT NOT NULL,
+   id_adherent INT NOT NULL,
+   PRIMARY KEY(id_reservation),
+   FOREIGN KEY(id_exemplaire) REFERENCES exemplaire(id_exemplaire),
+   FOREIGN KEY(id_adherent) REFERENCES Adherent(id_adherent)
+);
+
 CREATE TABLE pret(
    id_pret SERIAL,
    date_de_pret DATE,
@@ -101,6 +123,7 @@ CREATE TABLE pret(
    id_exemplaire INT NOT NULL,
    id_adherent INT NOT NULL,
    PRIMARY KEY(id_pret),
+   UNIQUE(id_exemplaire),
    FOREIGN KEY(id_type_de_pret) REFERENCES type_de_pret(id_type_de_pret),
    FOREIGN KEY(id_exemplaire) REFERENCES exemplaire(id_exemplaire),
    FOREIGN KEY(id_adherent) REFERENCES Adherent(id_adherent)
@@ -109,20 +132,19 @@ CREATE TABLE pret(
 CREATE TABLE prolongement(
    id_prolongement SERIAL,
    accepted BOOLEAN,
-   date_retour_apres_prolongement DATE,
    checked BOOLEAN,
    id_pret INT NOT NULL,
+   date_retour_apres_prolongement date,
    PRIMARY KEY(id_prolongement),
    UNIQUE(id_pret),
    FOREIGN KEY(id_pret) REFERENCES pret(id_pret)
 );
 
--- Verifier si un exemplaire est dispo
-/*
-
-select count(*)
-from pret
-where date_de_pret <= ? and ? <= date_retour_prevue
-and id_exemplaire = ?;
-
-*/
+CREATE TABLE historique_statut_exemplaire(
+   id_exemplaire INT,
+   id_statut INT,
+   date_changement DATE,
+   PRIMARY KEY(id_exemplaire, id_statut),
+   FOREIGN KEY(id_exemplaire) REFERENCES exemplaire(id_exemplaire),
+   FOREIGN KEY(id_statut) REFERENCES statut_exemplaire(id_statut)
+);

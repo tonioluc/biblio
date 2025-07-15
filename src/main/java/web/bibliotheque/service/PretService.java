@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import web.bibliotheque.model.Adherent;
+import web.bibliotheque.model.HistoriqueStatutExemplaire;
 import web.bibliotheque.model.Penalite;
 import web.bibliotheque.model.Pret;
 import web.bibliotheque.repository.PretRepository;
@@ -15,10 +16,16 @@ import web.bibliotheque.repository.PretRepository;
 @Service
 public class PretService {
     @Autowired
-    PretRepository pretRepository;
+    private PretRepository pretRepository;
 
     @Autowired
-    PenaliteService penaliteService;
+    private PenaliteService penaliteService;
+
+    @Autowired
+    private HistoriqueStatutExemplaireService historiqueStatutExemplaireService;
+
+    @Autowired
+    private StatutExemplaireService statutExemplaireService;
 
     public void sauvegarder(Pret pret) {
         pretRepository.save(pret);
@@ -70,6 +77,11 @@ public class PretService {
             result = true;
         }
         this.updatePret(pret);
+        HistoriqueStatutExemplaire historiqueStatutExemplaire = new HistoriqueStatutExemplaire();
+        historiqueStatutExemplaire.setDateChangement(dateRetourPrevue);
+        historiqueStatutExemplaire.setExemplaire(pret.getExemplaire());
+        historiqueStatutExemplaire.setStatutExemplaire(statutExemplaireService.getById((long) 1));
+        historiqueStatutExemplaireService.create(historiqueStatutExemplaire);
         return result;
     }
 

@@ -32,11 +32,8 @@ public class AdherentController {
         Long idUtilisateur = (Long) session.getAttribute("idUser");
         Utilisateur utilisateur = utilisateurService.getById(idUtilisateur);
         Adherent adherent = utilisateur.getAdherent();
-        System.out.println("eto1");
         List<Pret> pretsSansProlongement = pretService.getPretsEnCours(adherent);
-        System.out.println("eto2 "+pretsSansProlongement.size());
         List<PretProlongerDto> prets = prolongementService.convertPret(pretsSansProlongement);
-        System.out.println("eto3 "+prets.size());
         model.addAttribute("pretsDTO", prets);
     }
 

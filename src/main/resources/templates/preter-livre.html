@@ -8,13 +8,15 @@
 </head>
 
 <body>
+  <a th:href="@{/accueil}">Accueil</a>
+  <a th:href="@{/}">Deconnexion</a>
   <div class="container">
     <form action="/preter-livre" th:object="${pretDTO}" method="post">
       <div>
-        <label for="ref">Référence de l'exemplaire :</label>
-        <input list="refs" id="ref" th:field="*{ref}" name="ref">
-        <datalist id="refs">
-          <option th:each="exemplaire : ${exemplaires}" th:value="${exemplaire.getRef()}">
+        <label for="idLivre">Identifiant du livre : </label>
+        <input list="idLivres" id="idLivre" th:field="*{idLivre}" name="idLivre">
+        <datalist id="idLivres">
+          <option th:each="livre : ${livres}" th:value="${livre.getIdLivre()}">
         </datalist>
       </div>
       <div>
@@ -34,6 +36,10 @@
       <div>
         <label for="date">Date de prêt : </label>
         <input type="date" name="date" th:field="*{dateDePret}" id="date">
+      </div>
+      <div>
+        <label for="dateRetour">Date de retour(facultatif) : </label>
+        <input type="date" name="dateRetour" th:field="*{dateDeRetour}" id="dateRetour">
       </div>
       <div>
         <input type="submit" value="Valider">
