@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import web.bibliotheque.dto.PretExemplaireDTO;
-import web.bibliotheque.model.Exemplaire;
 import web.bibliotheque.model.Livre;
 import web.bibliotheque.model.Pret;
 import web.bibliotheque.model.TypeDePret;

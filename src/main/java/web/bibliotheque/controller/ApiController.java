@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import web.bibliotheque.dto.IdDto;
@@ -30,8 +31,8 @@ public class ApiController {
     PenaliteService penaliteService;
 
     @PostMapping("/api/adherent")
-    public Map<String, Object> endPointAdherent(@RequestBody IdDto idDto) {
-        Long id = idDto.getId();
+    public Map<String, Object> endPointAdherent(@RequestParam("id") Long id) {
+        // Long id = idDto.getId();
         Map<String, Object> response = new HashMap<>();
         Optional<Adherent> adherentOpt = adherentService.getAdherentById(id);
         if (!adherentOpt.isPresent()) {
