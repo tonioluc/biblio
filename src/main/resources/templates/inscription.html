@@ -1,19 +1,22 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
-    <title>Inscription</title>
-    <!-- <link rel="stylesheet" th:href="@{/css/inscription.css}" /> -->
+    <title>Inscription Adhérent</title>
+    <link rel="stylesheet" th:href="@{/css/inscription.css}" />
 </head>
 
 <body>
-    <a th:href="@{/accueil}">Accueil</a>
-    <a th:href="@{/}">Deconnexion</a>
-    <div class="container">
+    <header class="header-links">
+        <a th:href="@{/accueil}">🏠 Accueil</a>
+        <a th:href="@{/}">🚪 Déconnexion</a>
+    </header>
+
+    <main class="inscription-container">
         <h1>Inscription d'un nouvel adhérent</h1>
 
-        <form th:action="@{/inscrire-adherent}" th:object="${inscriptionDTO}" method="post">
+        <form th:action="@{/inscrire-adherent}" th:object="${inscriptionDTO}" method="post" class="inscription-form">
             <div class="form-group">
                 <label for="nom">Nom :</label>
                 <input type="text" id="nom" th:field="*{nom}" required>
@@ -33,8 +36,7 @@
                 <label for="typeCompte">Type de compte :</label>
                 <select id="typeCompte" th:field="*{typeCompte}" required>
                     <option value="">-- Sélectionnez --</option>
-                    <option th:each="profil : ${profils}" th:value="${profil.idProfil}" th:text="${profil.libelle}">
-                    </option>
+                    <option th:each="profil : ${profils}" th:value="${profil.idProfil}" th:text="${profil.libelle}"></option>
                 </select>
             </div>
 
@@ -58,13 +60,11 @@
                 <input type="date" id="dateExpirationAbonnement" th:field="*{dateExpirationAbonnement}" required>
             </div>
 
-            <div class="form-group">
-                <input type="submit" value="Inscrire" class="btn-submit">
-            </div>
+            <button type="submit" class="btn-submit">Inscrire</button>
         </form>
 
-        <p th:if="${erreur}" class="error" th:text="${erreur}"></p>
-    </div>
+        <p th:if="${erreur}" class="error-message" th:text="${erreur}"></p>
+    </main>
 </body>
 
 </html>

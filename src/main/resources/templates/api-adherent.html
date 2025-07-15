@@ -1,23 +1,32 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>API Adhérent</title>
+    <link rel="stylesheet" th:href="@{/css/api-adherent.css}" />
 </head>
 
 <body>
-    <a th:href="@{/accueil}">Accueil</a>
-    <a th:href="@{/}">Deconnexion</a>
-    <h1>Formulaire :</h1>
-    <form th:action="@{/api/adherent}" method="post">
-        <div>
-            <label for="id">id adherent :</label>
-            <input type="number" id="id" name="id" required>
-        </div>
-        <input type="submit" value="Valider">
-    </form>
+    <header class="header-links">
+        <a th:href="@{/accueil}">🏠 Accueil</a>
+        <a th:href="@{/}">🚪 Déconnexion</a>
+    </header>
+
+    <main class="api-container">
+        <h1>Recherche d'un Adhérent</h1>
+
+        <form th:action="@{/api/adherent}" method="post" class="api-form">
+            <div class="form-group">
+                <label for="id">ID Adhérent :</label>
+                <input type="number" id="id" name="id" required>
+            </div>
+
+            <button type="submit" class="btn-submit">Valider</button>
+        </form>
+    </main>
+
 </body>
 
 </html>

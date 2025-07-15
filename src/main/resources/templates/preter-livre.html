@@ -1,56 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <link rel="stylesheet" th:href="@{/css/preter-livre.css}" />
+  <title>Prêter un Livre</title>
 </head>
 
 <body>
-  <a th:href="@{/accueil}">Accueil</a>
-  <a th:href="@{/}">Deconnexion</a>
-  <div class="container">
-    <form action="/preter-livre" th:object="${pretDTO}" method="post">
-      <div>
-        <label for="idLivre">Identifiant du livre : </label>
-        <input list="idLivres" id="idLivre" th:field="*{idLivre}" name="idLivre">
+  <header class="header-links">
+    <a th:href="@{/accueil}">🏠 Accueil</a>
+    <a th:href="@{/}">🚪 Déconnexion</a>
+  </header>
+
+  <main class="pret-container">
+    <h1>Prêt d'un exemplaire</h1>
+
+    <form action="/preter-livre" th:object="${pretDTO}" method="post" class="pret-form">
+      <div class="form-group">
+        <label for="idLivre">Identifiant du livre :</label>
+        <input list="idLivres" id="idLivre" th:field="*{idLivre}" name="idLivre" required>
         <datalist id="idLivres">
-          <option th:each="livre : ${livres}" th:value="${livre.getIdLivre()}">
+          <option th:each="livre : ${livres}" th:value="${livre.getIdLivre()}"></option>
         </datalist>
       </div>
-      <div>
-        <label for="adherent">Nom d'utilisateur d'adhérent</label>
-        <input list="adherents" th:field="*{adherent}" name="adherent" id="adherent">
+
+      <div class="form-group">
+        <label for="adherent">Nom d'utilisateur de l'adhérent :</label>
+        <input list="adherents" id="adherent" th:field="*{adherent}" name="adherent" required>
         <datalist id="adherents">
-          <option th:each="utilisateur : ${utilisateurs}" th:value="${utilisateur.getNomUtilisateur()}">
+          <option th:each="utilisateur : ${utilisateurs}" th:value="${utilisateur.getNomUtilisateur()}"></option>
         </datalist>
       </div>
-      <div>
-        <label for="typePret">Choix de type de prêt : </label>
-        <select name="typePret" th:field="*{typePret}" id="typePret">
+
+      <div class="form-group">
+        <label for="typePret">Type de prêt :</label>
+        <select id="typePret" th:field="*{typePret}" name="typePret" required>
+          <!-- <option value="" >-- Sélectionnez --</option> -->
           <option th:each="typePret : ${typePrets}" th:text="${typePret.getLibelle()}"
             th:value="${typePret.getIdTypeDePret()}"></option>
         </select>
       </div>
-      <div>
-        <label for="date">Date de prêt : </label>
-        <input type="date" name="date" th:field="*{dateDePret}" id="date">
-      </div>
-      <div>
-        <label for="dateRetour">Date de retour(facultatif) : </label>
-        <input type="date" name="dateRetour" th:field="*{dateDeRetour}" id="dateRetour">
-      </div>
-      <div>
-        <input type="submit" value="Valider">
-      </div>
-    </form>
-    <div>
-      <p th:if="${erreur}" class="error" th:text="${erreur}"></p>
-      <p th:if="${message}" class="error" th:text="${message}"></p>
 
+      <div class="form-group">
+        <label for="date">Date de prêt :</label>
+        <input type="date" id="date" th:field="*{dateDePret}" name="date" required>
+      </div>
+
+      <div class="form-group">
+        <label for="dateRetour">Date de retour prévue (facultatif) :</label>
+        <input type="date" id="dateRetour" th:field="*{dateDeRetour}" name="dateRetour">
+      </div>
+
+      <button type="submit" class="btn-submit">Valider</button>
+    </form>
+
+    <div class="messages">
+      <p th:if="${erreur}" class="error-message" th:text="${erreur}"></p>
+      <p th:if="${message}" class="success-message" th:text="${message}"></p>
     </div>
-  </div>
+  </main>
+
 </body>
 
 </html>

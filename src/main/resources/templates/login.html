@@ -5,25 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
 </head>
 
-<body> 
-    <h1>Se connecter</h1>
-    <div class="container">
-        <form action="/se-connecter" method="post">
-            <div>
-                <label for="username">Nom d'utilisateur : </label>
-                <input type="text" value="tonioluc" name="username" id="username">
-            </div>
-            <div>
-                <label for="mdp">Mot de passe : </label>
-                <input value="mdp123" type="password" name="password" id="mdp">
-            </div>
-            <input type="submit" value="Se connecter">
-        </form>
-    </div>
-    <p th:if="${erreur}" class="error" th:text="${erreur}"></p>
-
+<body>
+    <main class="login-page">
+        <h1>Connexion</h1>
+        <section class="login-container">
+            <form action="/se-connecter" method="post" class="login-form">
+                <div class="form-group">
+                    <label for="username">Nom d'utilisateur :</label>
+                    <input type="text" name="username" id="username" value="tonioluc" required>
+                </div>
+                <div class="form-group">
+                    <label for="mdp">Mot de passe :</label>
+                    <input type="password" name="password" id="mdp" value="mdp123" required>
+                </div>
+                <button type="submit" class="submit-btn">Se connecter</button>
+            </form>
+            <p th:if="${erreur}" class="error-message" th:text="${erreur}"></p>
+        </section>
+    </main>
 </body>
 
 </html>

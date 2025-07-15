@@ -1,3 +1,4 @@
+/* Palette */
 :root {
     --bordeaux: #7b2d26;
     --sable: #d8c3a5;
@@ -17,83 +18,63 @@ body {
     color: var(--ardoise);
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
-.header-links {
-    width: 100%;
-    background-color: var(--bordeaux);
-    display: flex;
-    justify-content: flex-end;
-    padding: 0.5rem 1rem;
-    gap: 1rem;
-}
-
-.header-links a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
-
-.header-links a:hover {
-    color: var(--sable);
-}
-
-.inscription-container {
+.login-page {
+    text-align: center;
     background-color: white;
-    margin-top: 2rem;
     padding: 2rem;
     border-radius: 8px;
-    width: 400px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
 }
 
 h1 {
     color: var(--bordeaux);
-    margin-bottom: 1.5rem;
-    text-align: center;
-}
-
-.inscription-form .form-group {
     margin-bottom: 1rem;
-    display: flex;
-    flex-direction: column;
 }
 
-.inscription-form label {
+.login-container {
+    width: 100%;
+}
+
+.login-form .form-group {
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.login-form label {
+    display: block;
     margin-bottom: 0.5rem;
     font-weight: bold;
 }
 
-.inscription-form input,
-.inscription-form select {
+.login-form input {
+    width: 100%;
     padding: 0.5rem;
     border: 1px solid var(--ardoise);
     border-radius: 4px;
 }
 
-.btn-submit {
+.submit-btn {
     background-color: var(--bordeaux);
     color: white;
     border: none;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     border-radius: 4px;
-    width: 100%;
-    font-weight: bold;
     cursor: pointer;
-    margin-top: 1rem;
+    width: 100%;
     transition: background-color 0.3s ease;
 }
 
-.btn-submit:hover {
+.submit-btn:hover {
     background-color: #5e201b;
 }
 
 .error-message {
     margin-top: 1rem;
     color: red;
-    text-align: center;
     font-weight: bold;
 }

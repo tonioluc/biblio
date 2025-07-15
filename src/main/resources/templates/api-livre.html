@@ -1,23 +1,31 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>API Livre</title>
+    <link rel="stylesheet" th:href="@{/css/api-livre.css}" />
 </head>
 
 <body>
-    <a th:href="@{/accueil}">Accueil</a>
-    <a th:href="@{/}">Deconnexion</a>
-    <h1>Formulaire :</h1>
-    <form th:action="@{/api/livre}" method="post">
-        <div>
-            <label for="id">id livre : </label>
-            <input type="number" id="id" name="id" required>
-        </div>
-        <input type="submit" value="Valider">
-    </form>
+    <header class="header-links">
+        <a th:href="@{/accueil}">🏠 Accueil</a>
+        <a th:href="@{/}">🚪 Déconnexion</a>
+    </header>
+
+    <main class="api-container">
+        <h1>Recherche d'un Livre</h1>
+
+        <form th:action="@{/api/livre}" method="post" class="api-form">
+            <div class="form-group">
+                <label for="id">ID Livre :</label>
+                <input type="number" id="id" name="id" required />
+            </div>
+
+            <button type="submit" class="btn-submit">Valider</button>
+        </form>
+    </main>
 </body>
 
 </html>

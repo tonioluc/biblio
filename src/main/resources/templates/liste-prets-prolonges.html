@@ -1,42 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Liste des Prolongements</title>
+    <link rel="stylesheet" th:href="@{/css/liste-pret-prolonges.css}" />
 </head>
 
 <body>
-    <a th:href="@{/accueil}">Accueil</a>
-    <a th:href="@{/}">Deconnexion</a>
-    <h1>Liste des demandes de prêts prolongés</h1>
-    <table border="1" cellspacing="0">
-        <thead>
-            <tr>
-                <th>Id du livre : </th>
-                <th>Titre du livre : </th>
-                <th>Date de retour prévue après prolongement : </th>
-                <th>Action : </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="prolongement : ${prolongements}">
-                <td th:text="${prolongement.pret.exemplaire.livre.idLivre}"></td>
-                <td th:text="${prolongement.pret.exemplaire.livre.titre}"></td>
-                <td th:text="${#temporals.format(prolongement.dateRetourApresProlongement, 'dd/MM/yyyy')}"></td>
-                <td>
-                    <a th:href="@{/accepter-prolongement/{id}(id=${prolongement.idProlongement})}">
-                        <button>Accepter</button>
-                    </a>
-                    <a th:href="@{/refuser-prolongement/{id}(id=${prolongement.idProlongement})}">
-                        <button>Refuser</button>
-                    </a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <p th:if="${message}" th:text="${message}"></p>
+    <header class="header-links">
+        <a th:href="@{/accueil}">🏠 Accueil</a>
+        <a th:href="@{/}">🚪 Déconnexion</a>
+    </header>
+
+    <main class="prolongement-container">
+        <h1>Liste des demandes de prêts prolongés</h1>
+
+        <table class="prolongement-table">
+            <thead>
+                <tr>
+                    <th>ID du livre</th>
+                    <th>Titre du livre</th>
+                    <th>Date retour après prolongement</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="prolongement : ${prolongements}">
+                    <td th:text="${prolongement.pret.exemplaire.livre.idLivre}"></td>
+                    <td th:text="${prolongement.pret.exemplaire.livre.titre}"></td>
+                    <td th:text="${#temporals.format(prolongement.dateRetourApresProlongement, 'dd/MM/yyyy')}"></td>
+                    <td>
+                        <a th:href="@{/accepter-prolongement/{id}(id=${prolongement.idProlongement})}" class="btn-action accepter">Accepter</a>
+                        <a th:href="@{/refuser-prolongement/{id}(id=${prolongement.idProlongement})}" class="btn-action refuser">Refuser</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p th:if="${message}" class="message" th:text="${message}"></p>
+    </main>
 
 </body>
 

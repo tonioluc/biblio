@@ -1,26 +1,36 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Rendre un Livre</title>
+    <link rel="stylesheet" th:href="@{/css/rendre-livre.css}" />
 </head>
 
 <body>
-    <a th:href="@{/accueil}">Accueil</a>
-    <a th:href="@{/}">Deconnexion</a>
-    <h1>Formulaire pour rendre un livre :</h1>
-    <p>Date prévu pour le retour du livre : <span th:text="${pret.getDateRetourPrevue()}"></span></p>
-    <form th:action="@{/rendre-livre/{id}(id=${idPret})}" method="post">
-        <div>
-            <label for="date">Date de retour effective du livre :</label>
-            <input type="date" name="dateDeRetour">
-        </div>
-        <div>
-            <input type="submit" value="Valider">
-        </div>
-    </form>
+    <header class="header-links">
+        <a th:href="@{/accueil}">🏠 Accueil</a>
+        <a th:href="@{/}">🚪 Déconnexion</a>
+    </header>
+
+    <main class="rendre-container">
+        <h1>Formulaire de retour de livre</h1>
+
+        <p class="info">
+            📅 Date prévue de retour : <span th:text="${#temporals.format(pret.getDateRetourPrevue(), 'dd/MM/yyyy')}"></span>
+        </p>
+
+        <form th:action="@{/rendre-livre/{id}(id=${idPret})}" method="post" class="rendre-form">
+            <div class="form-group">
+                <label for="date">Date effective de retour :</label>
+                <input type="date" id="date" name="dateDeRetour" required>
+            </div>
+
+            <button type="submit" class="btn-submit">Valider</button>
+        </form>
+    </main>
+
 </body>
 
 </html>
