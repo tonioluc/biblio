@@ -33,3 +33,16 @@ INSERT INTO exemplaire (id_exemplaire, id_livre) VALUES
 (9, 5),
 (10, 5);
 
+INSERT INTO Adherent (nom, prenom, date_naissance, id_profil) 
+VALUES ('Randria', 'Antonio', '2000-01-01', 1);
+
+INSERT INTO Abonnement (date_debut, date_expiration, id_adherent) 
+VALUES (CURRENT_DATE, CURRENT_DATE + INTERVAL '1 year', 1);
+
+INSERT INTO Utilisateur (nom_utilisateur, mot_de_passe, role, id_adherent) 
+VALUES ('tonioluc', 'mdp123', 'ADHERENT', 1);
+
+INSERT INTO statut_exemplaire (libelle) VALUES 
+('Disponible'),
+('Emprunte'),
+('Reserve');
