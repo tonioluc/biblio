@@ -14,16 +14,16 @@
     <table border="1" cellspacing="0">
         <thead>
             <tr>
-                <th>Référence du livre : </th>
-                <th>Nom du livre : </th>
+                <th>Id du livre : </th>
+                <th>Titre du livre : </th>
                 <th>Date de retour prévue après prolongement : </th>
                 <th>Action : </th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="prolongement : ${prolongements}">
-                <td th:text="${prolongement.pret.exemplaire.ref}"></td>
-                <td th:text="${prolongement.pret.exemplaire.titre}"></td>
+                <td th:text="${prolongement.pret.exemplaire.livre.idLivre}"></td>
+                <td th:text="${prolongement.pret.exemplaire.livre.titre}"></td>
                 <td th:text="${#temporals.format(prolongement.dateRetourApresProlongement, 'dd/MM/yyyy')}"></td>
                 <td>
                     <a th:href="@{/accepter-prolongement/{id}(id=${prolongement.idProlongement})}">

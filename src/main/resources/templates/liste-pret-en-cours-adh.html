@@ -14,15 +14,15 @@
     <table border="1" cellspacing="0">
         <thead>
             <tr>
-                <th>Référence du livre : </th>
-                <th>Nom du livre : </th>
+                <th>Id du livre : </th>
+                <th>Titre du livre : </th>
                 <th>Action : </th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="pretDTO : ${pretsDTO}">
-                <td th:text="${pretDTO.getPret().getExemplaire().getRef()}"></td>
-                <td th:text="${pretDTO.getPret().getExemplaire().getTitre()}"></td>
+                <td th:text="${pretDTO.getPret().getExemplaire().getLivre().getRef()}"></td>
+                <td th:text="${pretDTO.getPret().getExemplaire().getLivre().getTitre()}"></td>
                 <td>
                     <span th:if="${pretDTO.prolonger}">Déjà prolongé</span>
                     <a th:if="${!pretDTO.prolonger}"

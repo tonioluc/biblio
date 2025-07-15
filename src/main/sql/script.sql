@@ -134,6 +134,7 @@ CREATE TABLE prolongement(
    accepted BOOLEAN,
    checked BOOLEAN,
    id_pret INT NOT NULL,
+   date_retour_apres_prolongement date,
    PRIMARY KEY(id_prolongement),
    UNIQUE(id_pret),
    FOREIGN KEY(id_pret) REFERENCES pret(id_pret)
