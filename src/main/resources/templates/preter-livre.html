@@ -13,7 +13,7 @@
   <div class="container">
     <form action="/preter-livre" th:object="${pretDTO}" method="post">
       <div>
-        <label for="idLivre">Référence de l'exemplaire :</label>
+        <label for="idLivre">Identifiant du livre : </label>
         <input list="idLivres" id="idLivre" th:field="*{idLivre}" name="idLivre">
         <datalist id="idLivres">
           <option th:each="livre : ${livres}" th:value="${livre.getIdLivre()}">
