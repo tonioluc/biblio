@@ -83,4 +83,13 @@ public class PretController {
                 model.addAttribute("message", message);
         return "liste-pret-en-cours-biblio";
     }
+
+    
+    @GetMapping("/api/adherent")
+    public String afficherFormAPI(){
+        return "api-adherent";
+    }
+
+   
+
 }
