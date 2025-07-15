@@ -66,7 +66,7 @@ public class ExemplaireService {
                         int quotaDePret = profil.getQuotaPret();
                         int nombreDePretEnCours = adherentService.nombreDePretEnCours(adherent);
                         if (quotaDePret > nombreDePretEnCours) {
-                            if (!adherentService.estPenalise(adherent , datePret)) {
+                            if (!adherentService.estPenalise(adherent, datePret)) {
                                 int ageAdherent = LocalDate.now().getYear() - adherent.getDateNaissance().getYear();
                                 int ageRequis = exemplaire.getRestriction_age();
                                 if (ageAdherent >= ageRequis) {
@@ -81,7 +81,14 @@ public class ExemplaireService {
                                         durreeDePret = 0;
                                         System.out.println("tafiditra");
                                     }
-                                    pret.setDateRetourPrevue(datePret.plusDays(durreeDePret));
+                                    LocalDate dateRetourPrevue = pretExemplaireDTO.getDateDeRetour();
+                                    pret.setDateRetourPrevue(dateRetourPrevue);
+                                    if (dateRetourPrevue == null || pretExemplaireDTO.getTypePret() == 1) {
+                                        pret.setDateRetourPrevue(datePret.plusDays(durreeDePret));
+                                    } else if (dateRetourPrevue.isBefore(datePret)) {
+                                        throw new Exception(
+                                                "La date de retour prévu ne dois pas être avant la date de prêt");
+                                    }
 
                                     pret.setExemplaire(exemplaire);
                                     pret.setDateRetourEffective(null);

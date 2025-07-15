@@ -71,4 +71,9 @@ public class AdherentController {
         model.addAttribute("erreur", "Pret non trouvé");
         return "liste-pret-en-cours-adh";
     }
+
+    @GetMapping("/api/adherent")
+    public String afficherFormAPI(){
+        return "api-adherent";
+    }
 }

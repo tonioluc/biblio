@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <a th:href="@{/accueil}">Accueil</a>
+    <a th:href="@{/}">Deconnexion</a>
+    <h1>Formulaire :</h1>
+    <form th:action="@{/api/adherent}" method="post">
+        <div>
+            <label for="id">id adherent :</label>
+            <input type="number" id="id" name="id" required>
+        </div>
+        <input type="submit" value="Valider">
+    </form>
+</body>
+
+</html>
