@@ -13,15 +13,17 @@ public class JourFerieService {
     @Autowired
     private web.bibliotheque.repository.JourFerieRepository jourFerieRepository;
 
-    public List<JourFerie> getAll() {
-        return jourFerieRepository.findAll();
+    public List<JourFerie> getAllOrderByDate() {
+        return jourFerieRepository.findAllByOrderByDateJourAsc();
     }
 
     public LocalDate getDateActif(LocalDate dateRetourPrevue){
         LocalDate result = dateRetourPrevue;
-        for (JourFerie jourFerie : this.getAll()) {
+        List<JourFerie> joursFeries = this.getAllOrderByDate();
+        System.out.println("nombre jour féries: " + joursFeries.size());
+        for (JourFerie jourFerie : joursFeries) {
             if (jourFerie.getDateJour().equals(result)) {
-                result.plusDays(1);
+                result = result.plusDays(1);
                 System.out.println("Tafiditra ny jour férié: " + result);
             }
         }

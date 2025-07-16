@@ -40,7 +40,6 @@ public class PretController {
         Prolongement prolongement = prolongementService.getById(id);
         prolongementService.accepterProlongement(prolongement);
         loadPretProlonger(model);
-        model.addAttribute("message", "Prolongement accepté.");
         return "liste-prets-prolonges";
     }
 
@@ -74,22 +73,19 @@ public class PretController {
     @PostMapping("/rendre-livre/{id}")
     public String rendreLivre(@PathVariable("id") Long idPret,
             @RequestParam("dateDeRetour") LocalDate dateRetourEffective, Model model) {
-                boolean estPenalise = pretService.rendreUnLivre(idPret, dateRetourEffective);
-                loadPretsEnCours(model);
-                String message = "Rendement d'un livre effectué avec succes";
-                if (estPenalise) {
-                    message+=" , et pénalisé";
-                }
-                model.addAttribute("message", message);
+        boolean estPenalise = pretService.rendreUnLivre(idPret, dateRetourEffective);
+        loadPretsEnCours(model);
+        String message = "Rendement d'un livre effectué avec succes";
+        if (estPenalise) {
+            message += " , et pénalisé";
+        }
+        model.addAttribute("message", message);
         return "liste-pret-en-cours-biblio";
     }
 
-    
     @GetMapping("/api/adherent")
-    public String afficherFormAPI(){
+    public String afficherFormAPI() {
         return "api-adherent";
     }
-
-   
 
 }

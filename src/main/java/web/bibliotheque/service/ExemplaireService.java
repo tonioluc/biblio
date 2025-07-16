@@ -137,7 +137,9 @@ public class ExemplaireService {
                                         throw new Exception(
                                                 "La date de retour prévu ne dois pas être avant la date de prêt");
                                     }
-                                    pret.setDateRetourEffective(jourFerieService.getDateActif(dateRetourPrevue));
+                                    LocalDate dateRetourActif = jourFerieService.getDateActif(pret.getDateRetourPrevue());
+                                    System.out.println("Date de retour actif : "+dateRetourActif);
+                                    pret.setDateRetourPrevue(dateRetourActif);
                                     pret.setExemplaire(exemplaire);
                                     pret.setDateRetourEffective(null);
 
