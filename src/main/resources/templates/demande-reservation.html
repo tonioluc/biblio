@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <header class="header-links">
+        <a th:href="@{/accueil}">🏠 Accueil</a>
+        <a th:href="@{/}">🚪 Déconnexion</a>
+    </header>
+
+    <main class="reservation-container">
+        <h1>Demande de Réservation</h1>
+
+        <form th:action="@{/demande-reservation}" method="post" class="reservation-form">
+            <div class="form-group">
+
+            </div>
+            <div class="form-group">
+                <label for="idLivre">Identifiant du livre :</label>
+                <input list="idLivres" id="idLivre" name="idLivre" required>
+                <datalist id="idLivres">
+                    <option th:each="livre : ${livres}" th:value="${livre.getIdLivre()}"></option>
+                </datalist>
+            </div>
+            <div class="form-group">
+                <label for="date">Date de reseration : </label>
+                <input type="date" id="date" name="date" required>
+            </div>
+            <input type="submit" value="Valider" class="btn-submit">
+        </form>
+    </main>
+</body>
+
+</html>
