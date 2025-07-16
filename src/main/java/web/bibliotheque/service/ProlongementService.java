@@ -30,6 +30,9 @@ public class ProlongementService {
     private AdherentService adherentService;
 
     @Autowired
+    private JourFerieService jourFerieService;
+
+    @Autowired
     private PretService pretService;
 
     public boolean pretProlonger(Pret pret) {
@@ -54,6 +57,7 @@ public class ProlongementService {
     public void sauvergarder(Prolongement prolongement){
         prolongementRepostirory.save(prolongement);
     }
+
 
     public void autoriserAProlonger(Pret pret, Long idUtilisateur) throws Exception {
         Utilisateur utilisateur = utilisateurService.getById(idUtilisateur);
@@ -99,7 +103,8 @@ public class ProlongementService {
 
     public void accepterProlongement(Prolongement prolongement){
         Pret pret = prolongement.getPret();
-        pret.setDateRetourPrevue(prolongement.getDateRetourApresProlongement());
+        LocalDate dateRetourPrevue = pret.getDateRetourPrevue();
+        pret.setDateRetourPrevue(jourFerieService.getDateActif(dateRetourPrevue));
         pretService.updatePret(pret);
         prolongement.setAccepted(true);
         prolongement.setChecked(true);

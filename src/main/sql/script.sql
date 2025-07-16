@@ -22,7 +22,6 @@ CREATE TABLE Adherent(
    date_naissance DATE NOT NULL,
    id_profil INT NOT NULL,
    PRIMARY KEY(id_adherent),
-   UNIQUE(id_profil),
    FOREIGN KEY(id_profil) REFERENCES Profil(id_profil)
 );
 
@@ -40,7 +39,6 @@ CREATE TABLE Abonnement(
    date_expiration DATE NOT NULL,
    id_adherent INT NOT NULL,
    PRIMARY KEY(id_abonnement),
-   UNIQUE(date_expiration),
    FOREIGN KEY(id_adherent) REFERENCES Adherent(id_adherent)
 );
 
@@ -123,7 +121,6 @@ CREATE TABLE pret(
    id_exemplaire INT NOT NULL,
    id_adherent INT NOT NULL,
    PRIMARY KEY(id_pret),
-   UNIQUE(id_exemplaire),
    FOREIGN KEY(id_type_de_pret) REFERENCES type_de_pret(id_type_de_pret),
    FOREIGN KEY(id_exemplaire) REFERENCES exemplaire(id_exemplaire),
    FOREIGN KEY(id_adherent) REFERENCES Adherent(id_adherent)
@@ -147,4 +144,10 @@ CREATE TABLE historique_statut_exemplaire(
    PRIMARY KEY(id_exemplaire, id_statut),
    FOREIGN KEY(id_exemplaire) REFERENCES exemplaire(id_exemplaire),
    FOREIGN KEY(id_statut) REFERENCES statut_exemplaire(id_statut)
+);
+
+CREATE TABLE jour_ferie(
+   id_jour SERIAL,
+   date_jour DATE,
+   PRIMARY KEY(id_jour)
 );
