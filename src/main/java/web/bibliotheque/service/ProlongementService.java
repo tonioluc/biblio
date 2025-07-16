@@ -64,7 +64,7 @@ public class ProlongementService {
         Adherent adherent = utilisateur.getAdherent();
         Profil profil = adherent.getProfil();
         LocalDate dateApresProlongement = pret.getDateRetourPrevue().plusDays(profil.getDurreeDePret());
-        if (!abonnementService.estAbonnee(adherent, LocalDate.now())) {
+        if (!abonnementService.estAbonnee(adherent, dateApresProlongement)) {
             throw new Exception("Adhérent non abonnée"); // Vérifié
         }
         int quotaProlongement = profil.getQuotaProlongement();
