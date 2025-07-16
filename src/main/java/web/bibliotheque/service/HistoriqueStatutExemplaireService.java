@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import web.bibliotheque.model.Exemplaire;
 import web.bibliotheque.model.HistoriqueStatutExemplaire;
 
 import web.bibliotheque.repository.HistoriqueStatutExemplaireRepository;
@@ -20,5 +21,9 @@ public class HistoriqueStatutExemplaireService {
     }
     public List<HistoriqueStatutExemplaire> getDernierStatutAvantDate(Long idExemplaire,LocalDate date){
         return historiqueStatutExemplaireRepository.findDernierStatutAvantDate(idExemplaire, date);
+    }
+
+    public List<HistoriqueStatutExemplaire> getAllByExemplaire(Exemplaire exemplaire) {
+        return historiqueStatutExemplaireRepository.findByExemplaireOrderByDateChangementDesc(exemplaire);
     }
 }

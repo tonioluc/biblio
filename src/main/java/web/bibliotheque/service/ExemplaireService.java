@@ -50,6 +50,9 @@ public class ExemplaireService {
     @Autowired
     private StatutExemplaireService statutExemplaireService;
 
+    @Autowired
+    private JourFerieService jourFerieService;
+
     public List<Exemplaire> getAll() {
         return exemplaireRepository.findAll();
     }
@@ -60,6 +63,10 @@ public class ExemplaireService {
 
     public boolean estReserver(LocalDate date, Exemplaire exemplaire) {
         return exemplaireRepository.estReserver(exemplaire.getIdExemplaire(), date) > 0;
+    }
+
+    public List<Exemplaire> getByLivre(Livre livre) {
+        return exemplaireRepository.findByLivre(livre);
     }
 
     public List<Exemplaire> getExemplairesDisponibles(Livre livre, LocalDate date) {
@@ -130,15 +137,17 @@ public class ExemplaireService {
                                         throw new Exception(
                                                 "La date de retour prévu ne dois pas être avant la date de prêt");
                                     }
-
+                                    pret.setDateRetourEffective(jourFerieService.getDateActif(dateRetourPrevue));
                                     pret.setExemplaire(exemplaire);
                                     pret.setDateRetourEffective(null);
+
                                     HistoriqueStatutExemplaire historiqueStatutExemplaire = new HistoriqueStatutExemplaire();
                                     historiqueStatutExemplaire.setDateChangement(datePret);
                                     historiqueStatutExemplaire.setExemplaire(exemplaire);
                                     StatutExemplaire statutExemplaire = statutExemplaireService.getById((long) 2);
                                     historiqueStatutExemplaire.setStatutExemplaire(statutExemplaire);
                                     historiqueStatutExemplaireService.create(historiqueStatutExemplaire);
+
                                     return pret;
                                 } else {
                                     throw new Exception("L'adhérent ne peut pas prêter ce livre . Age requis : "
